@@ -1,0 +1,63 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    "**/.env.*local",
+    "biome.json",
+    "packages/tsconfig/**"
+  ],
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "dependsOn": ["lint", "^build"],
+      "cache": true,
+      "inputs": [
+        "packages/backend-errors/**",
+        "!packages/backend-errors/dist/**",
+        "apps/backend-api/**",
+        "!apps/backend-api/dist/**",
+        "apps/backend/**",
+        "!apps/backend/.next/**"
+      ],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+    },
+    "lint": {},
+    "test": {
+      "persistent": true,
+      "interactive": true,
+      "cache": false
+    },
+    "build:backend": {
+      "dependsOn": ["@internal/backend#lint","@internal/backend#build"],
+      "cache": true,
+      "inputs": ["apps/backend-api/**", "!apps/backend-api/dist/**"],
+      "outputs": [
+        "apps/backend/dist/**",
+        "packages/backend-client/openapi.yml"
+      ]
+    },
+    "generate:sdk": {
+      "dependsOn": [
+        "build:backend",
+        "@internal/backend-client#build"
+      ],
+      "cache": true,
+      "inputs": [
+        "apps/backend-api/dist/api/**",
+        "packages/backend-client/openapi.yml"
+      ],
+      "outputs": ["packages/backend-client/dist/**"]
+    },
+    "dev": {
+      "dependsOn": ["@internal/backend-errors#build"],
+      "cache": false,
+      "persistent": true
+    },
+    "prod": {
+      "dependsOn": ["build"],
+      "persistent": true,
+      "cache": true,
+      "inputs": ["$TURBO_DEFAULT$"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+    }
+  }
+}

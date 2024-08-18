@@ -1,0 +1,14 @@
+import { type Kysely, sql } from "kysely";
+
+export async function up(db: Kysely<any>): Promise<void> {
+  await db.schema
+    .createTable("{{snakeCase tableName}}s")
+    .addColumn("id", "uuid", (col) => col.defaultTo(sql`gen_random_uuid()`).primaryKey())
+    .addColumn("created_at", "timestamptz", (col) => col.defaultTo(sql`now()`))
+    .addColumn("updated_at", "timestamptz", (col) => col.defaultTo(sql`now()`))
+    .execute();
+}
+
+export async function down(db: Kysely<any>): Promise<void> {
+  await db.schema.dropTable("{{snakeCase tableName}}s").execute();
+}

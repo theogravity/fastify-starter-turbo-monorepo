@@ -1,0 +1,46 @@
+import type { DeleteResult, Kysely } from "kysely";
+import type { Database } from "../types";
+import type { New{{ properCase tableName }}, {{ properCase tableName }}Db, {{ properCase tableName }}Update } from "../types/{{ dashCase tableName }}s.db-types";
+import { BaseRepository } from "./base.repository";
+
+export class {{ properCase tableName }}sRepository extends BaseRepository {
+  async create{{ properCase tableName }}({
+    db,
+    {{ tableName }},
+  }: {
+    db: Kysely<Database>;
+    {{ tableName }}: New{{ properCase tableName }};
+  }): Promise<{{ properCase tableName }}Db> {
+    return db.insertInto("{{ tableName }}s").values({{ tableName }}).returningAll().executeTakeFirstOrThrow();
+  }
+
+  async get{{ properCase tableName }}ById({
+    db,
+    {{ tableName }}Id,
+  }: {
+    db: Kysely<Database>;
+    {{ tableName }}Id: string;
+  }): Promise<{{ properCase tableName }}Db | null> {
+    return db.selectFrom("{{ tableName }}s").selectAll().where("id", "=", {{ tableName }}Id).executeTakeFirst();
+  }
+
+  async remove{{ properCase tableName }}ById({
+    db,
+    {{ tableName }}Id,
+  }: {
+    db: Kysely<Database>;
+    {{ tableName }}Id: string;
+  }): Promise<DeleteResult[]> {
+    return db.deleteFrom("{{ tableName }}s").where("id", "=", {{ tableName }}Id).execute();
+  }
+
+  async updateUser({
+    db,
+    {{ tableName }},
+  }: {
+    db: Kysely<Database>;
+    {{ tableName }}: {{ properCase tableName }}Update;
+  }): Promise<{{ properCase tableName }}Db> {
+    return db.updateTable("{{ tableName }}s").set({{ tableName }}).where("id", "=", {{ tableName }}.id).returningAll().executeTakeFirstOrThrow();
+  }
+}

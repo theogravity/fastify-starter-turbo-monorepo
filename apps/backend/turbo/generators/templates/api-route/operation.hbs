@@ -1,0 +1,54 @@
+import { type Static, Type } from "@sinclair/typebox";
+import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+{{#ifEquals methodType "GET" }}{{set "responseCode" 200 }}{{/ifEquals}}{{#ifEquals methodType "POST" }}{{set "responseCode" 200 }}{{/ifEquals}}{{#ifEquals methodType "PUT" }}{{set "responseCode" 201 }}{{/ifEquals}}{{#ifEquals methodType "DELETE" }}{{set "responseCode" 204 }}{{/ifEquals}}
+const {{ properCase operationName }}Request = Type.Object(
+  {
+    description: Type.String({
+      description: "Define your request body here",
+    }),
+  },
+  { $id: "{{ properCase operationName }}Request" },
+);
+
+const {{ properCase operationName }}Response = Type.Object(
+  {
+    id: Type.Number({
+      description: "Define your response body here",
+    }),
+  },
+  { $id: "{{ properCase operationName }}Response" },
+);
+
+export async function {{ operationName }}Route(fastify: FastifyInstance) {
+  fastify.addSchema({{ properCase operationName }}Request);
+  fastify.addSchema({{ properCase operationName }}Response);
+
+  const routeOpts = {
+    schema: {
+      operationId: "{{ operationName }}",
+      tags: ["{{ routeResource }}"],
+      description: "Add your route description here",
+      body: Type.Ref({{ properCase operationName }}Request),
+      response: {
+        "{{ responseCode }}": Type.Ref({{ properCase operationName }}Response),
+      },
+    },
+  }
+
+  fastify.{{ lowerCase methodType }}("{{ routePath }}", routeOpts, {{ operationName }}Controller);
+}
+
+export async function {{ operationName }}Controller(
+  request: FastifyRequest<{
+    Body: Static<typeof {{ properCase operationName }}Request>;
+  }>,
+  reply: FastifyReply,
+) {
+  const { description } = request.body;
+
+  const response: Static<typeof {{ properCase operationName }}Response> = {
+    id: 1,
+  };
+
+  reply.status({{ responseCode }}).send(response);
+}

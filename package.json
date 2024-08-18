@@ -1,0 +1,47 @@
+{
+  "name": "monorepo-boilerplate",
+  "description": "",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "changeset": "changeset",
+    "db:migrate:create": "cd apps/backend && pnpm run db:migrate:create",
+    "db:migrate:latest": "cd apps/backend && pnpm run db:migrate:latest",
+    "db:migrate:undo": "cd apps/backend && pnpm run db:migrate:undo",
+    "clean:git": "git clean -xdf node_modules",
+    "clean:workspaces": "apps/backend/turbo clean",
+    "lint": "apps/backend/turbo run lint --continue --",
+    "syncpack:update": "syncpack update && pnpm i",
+    "syncpack:fix": "syncpack fix-mismatches",
+    "syncpack:format": "syncpack format",
+    "syncpack:lint": "syncpack lint",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.8.3",
+    "@changesets/changelog-github": "0.5.0",
+    "@changesets/cli": "2.27.7",
+    "@commitlint/cli": "19.4.0",
+    "@commitlint/config-conventional": "19.2.2",
+    "@internal/tsconfig": "workspace:*",
+    "@types/node": "22.4.0",
+    "husky": "9.1.4",
+    "lint-staged": "15.2.9",
+    "syncpack": "12.4.0",
+    "turbo": "2.0.14",
+    "typescript": "5.5.4"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,html,css,json}": [
+      "pnpm run lint"
+    ],
+    "**/package.json": [
+      "pnpm run syncpack:format",
+      "pnpm run syncpack:lint"
+    ]
+  },
+  "engines": {
+    "node": ">=20.16.0"
+  },
+  "engineStrict": true
+}

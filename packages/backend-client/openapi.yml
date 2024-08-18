@@ -1,0 +1,108 @@
+openapi: 3.0.3
+info:
+  title: Backend API
+  version: 1.0.0
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    UserProviderType:
+      type: string
+      title: UserProviderType
+      enum:
+        - EMail
+    User:
+      type: object
+      properties:
+        id:
+          description: ID of the user
+          type: string
+        givenName:
+          description: Given name of the user
+          type: string
+        familyName:
+          description: Family name of the user
+          type: string
+      required:
+        - id
+        - givenName
+        - familyName
+      title: User
+    UserProvider:
+      type: object
+      properties:
+        userId:
+          description: ID of the user
+          type: string
+        providerType:
+          type: string
+          enum:
+            - EMail
+        accountId:
+          description: The account id associated with the provider
+          type: string
+      required:
+        - userId
+        - providerType
+        - accountId
+      title: UserProvider
+    CreateEMailUserRequest:
+      type: object
+      properties:
+        givenName:
+          minLength: 1
+          maxLength: 50
+          type: string
+        familyName:
+          minLength: 1
+          maxLength: 100
+          type: string
+        email:
+          minLength: 3
+          maxLength: 255
+          format: email
+          type: string
+        password:
+          minLength: 8
+          maxLength: 64
+          type: string
+      required:
+        - givenName
+        - familyName
+        - email
+        - password
+      title: CreateEMailUserRequest
+    CreateEMailUserResponse:
+      type: object
+      properties:
+        user:
+          $ref: "#/components/schemas/User"
+        provider:
+          $ref: "#/components/schemas/UserProvider"
+      required:
+        - user
+        - provider
+      title: CreateEMailUserResponse
+paths:
+  /users/:
+    post:
+      operationId: createEMailUser
+      tags:
+        - user
+      description: Create an e-mail-based account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateEMailUserRequest"
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateEMailUserResponse"
+

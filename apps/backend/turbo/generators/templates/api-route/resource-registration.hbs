@@ -1,0 +1,12 @@
+import type { FastifyInstance } from "fastify";
+
+// Do not remove this comment: route-imports
+
+export async function register{{properCase routeResource}}Routes(fastify: FastifyInstance, _opts) {
+    fastify.register({{routeResource}}Routes, { prefix: "/{{routeResource}}" });
+}
+
+// All resource CRUD methods get registered here
+async function {{routeResource}}Routes(fastify: FastifyInstance) {
+    // Do not remove this comment: route-register
+}

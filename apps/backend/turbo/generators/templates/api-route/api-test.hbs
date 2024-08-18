@@ -1,0 +1,22 @@
+import { faker } from "@faker-js/faker";
+import { describe, expect, it } from "vitest";
+import { testFramework } from "../../../test-utils/test-framework";
+import { testFastify } from "../../../test-utils/test-server";
+{{#ifEquals methodType "GET" }}{{set "responseCode" 200 }}{{/ifEquals}}{{#ifEquals methodType "POST" }}{{set "responseCode" 200 }}{{/ifEquals}}{{#ifEquals methodType "PUT" }}{{set "responseCode" 201 }}{{/ifEquals}}{{#ifEquals methodType "DELETE" }}{{set "responseCode" 204 }}{{/ifEquals}}
+
+describe("{{ properCase operationName }} {{ methodType }} API", () => {
+  it("should test the endpoint", async () => {
+    const facets = await testFramework.generateTestFacets()
+    const response = await testFastify.inject({
+      method: "{{ methodType }}",
+      url: "/{{ routeResource }}/{{ operationName }}",
+      payload: {
+        description: faker.lorem.sentence(),
+      },
+      headers: {},
+    });
+
+    expect(response.statusCode).toBe({{ responseCode }});
+    expect(response.json().id).toBeDefined();
+  });
+});

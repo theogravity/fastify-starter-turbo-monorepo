@@ -1,0 +1,5 @@
+packages:
+  # executable/launchable applications
+  - "apps/*"
+  # re-usable libraries across applications
+  - "packages/*"

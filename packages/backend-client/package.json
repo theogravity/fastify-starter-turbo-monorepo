@@ -1,0 +1,27 @@
+{
+  "name": "@internal/backend-client",
+  "description": "Client to call backend.",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "openapi-ts && tsup src/index.ts",
+    "clean": "rm -rf .turbo node_modules dist",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@hey-api/openapi-ts": "0.51.0",
+    "@hey-api/client-fetch": "0.1.14",
+    "@internal/tsconfig": "workspace:*",
+    "@internal/backend": "workspace:*",
+    "tsup": "8.2.4"
+  }
+}
