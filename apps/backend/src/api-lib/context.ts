@@ -1,6 +1,7 @@
 import type { Kysely } from "kysely";
 import type { ILogLayer } from "loglayer";
 import { db } from "../db";
+// Do not remove this comment: repository-import
 import { UserProvidersRepository } from "../db/repositories/user-providers.repository";
 import { UsersRepository } from "../db/repositories/users.repository";
 import type { Database } from "../db/types";
@@ -32,6 +33,7 @@ export class ApiContext {
       log: params.log,
       db: params.db,
       repos: {
+        // Do not remove this comment: database-table-repository
         users: new UsersRepository(params),
         userProviders: new UserProvidersRepository(params),
       },

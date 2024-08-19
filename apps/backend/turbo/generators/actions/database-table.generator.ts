@@ -51,6 +51,30 @@ export function databaseTableGenerator(plop: PlopTypes.NodePlopAPI) {
         path: "{{ turbo.paths.root }}/apps/backend/src/db/types/index.ts",
         template: "  {{ tableName }}s: {{ properCase tableName }}sTable;",
       },
+      {
+        type: "append",
+        pattern: "database-table-import",
+        path: "{{ turbo.paths.root }}/apps/backend/src/db/repositories/index.ts",
+        template: `import type { {{properCase tableName}}sRepository } from "./{{dashCase tableName}}s.repository";`,
+      },
+      {
+        type: "append",
+        pattern: "database-table-repository",
+        path: "{{ turbo.paths.root }}/apps/backend/src/db/repositories/index.ts",
+        template: "  {{ tableName }}s: {{ properCase tableName }}sRepository;",
+      },
+      {
+        type: "append",
+        pattern: "repository-import",
+        path: "{{ turbo.paths.root }}/apps/backend/src/api-lib/context.ts",
+        template: `import { {{ properCase tableName }}sRepository } from "../db/repositories/{{dashCase tableName}}s.repository";`,
+      },
+      {
+        type: "append",
+        pattern: "database-table-repository",
+        path: "{{ turbo.paths.root }}/apps/backend/src/api-lib/context.ts",
+        template: "        {{ tableName }}s: new {{ properCase tableName }}sRepository(params),",
+      },
     ],
   });
 }
