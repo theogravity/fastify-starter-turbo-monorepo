@@ -1,0 +1,10 @@
+{
+  "outDir": "dist",
+    "format": ["esm", "cjs"],
+    "splitting": true,
+    "sourcemap": true,
+    "clean": true,
+    "target": ["ESNext"],
+    "minify": false,
+    "dts": true
+}
