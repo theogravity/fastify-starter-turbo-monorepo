@@ -2,8 +2,8 @@ import type { ColumnType, Generated, Insertable, Selectable, Updateable } from "
 
 export interface {{properCase tableName}}sTable {
   id: Generated<string>;
-  createdAt: ColumnType<Date, string | undefined, never>;
-  updatedAt: ColumnType<Date, string | undefined, never>;
+  createdAt: Generated<ColumnType<Date, string | undefined, never>>;
+  updatedAt: Generated<ColumnType<Date, string | undefined, never>>;
 }
 
 export type {{properCase tableName}}Db = Selectable<{{properCase tableName}}sTable>;
