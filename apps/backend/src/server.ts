@@ -6,7 +6,7 @@ import { nanoid } from "nanoid";
 import routes from "./api";
 import { ajvPlugins } from "./api-lib/ajv-plugins";
 import { errorHandler } from "./api-lib/error-handler";
-import { decorators } from "./decorators";
+import { plugins } from "./plugins";
 import { asyncLocalStorage } from "./utils/async-local-storage";
 import { getLogger } from "./utils/logger";
 
@@ -35,7 +35,7 @@ export async function startServer({
     asyncLocalStorage.run({ logger }, done);
   });
 
-  fastify.register(fp(decorators));
+  fastify.register(fp(plugins));
 
   fastify.setErrorHandler(errorHandler);
 

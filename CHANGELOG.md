@@ -10,6 +10,7 @@
 - Added linting / formatting to the backend-errors package
 - Removed --watch flag from backend dev script
   * Should now run `turbo watch dev` to watch for changes
+- Rename the `decorators` directories to `plugins` since not all items in it are decorators
 
 ## Aug-17-2024
 

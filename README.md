@@ -95,7 +95,7 @@ Update all package versions and generate changelogs:
 
 ## Troubleshooting
 
-## turbo watch dev failing
+### turbo watch dev failing
 
 ```
 • Packages in scope: @internal/backend, @internal/backend-client, @internal/backend-errors, @internal/tsconfig

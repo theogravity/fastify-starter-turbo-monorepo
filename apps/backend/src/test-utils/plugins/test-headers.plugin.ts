@@ -1,7 +1,7 @@
 import type { FastifyInstance } from "fastify";
 import fp from "fastify-plugin";
 
-async function decorator(fastify: FastifyInstance, _opts) {
+async function plugin(fastify: FastifyInstance, _opts) {
   fastify.decorateRequest("userId", null);
 
   fastify.addHook("preHandler", async (request) => {
@@ -13,4 +13,4 @@ async function decorator(fastify: FastifyInstance, _opts) {
   });
 }
 
-export const testHeadersDecorator = fp(decorator);
+export const testHeadersPlugin = fp(plugin);

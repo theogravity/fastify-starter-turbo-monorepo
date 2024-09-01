@@ -4,8 +4,8 @@ export interface UsersTable {
   id: Generated<string>;
   givenName: string;
   familyName: string;
-  createdAt: ColumnType<Date, string | undefined, never>;
-  updatedAt: ColumnType<Date, string | undefined, never>;
+  createdAt: Generated<ColumnType<Date, Date, never>>;
+  updatedAt: Generated<ColumnType<Date>>;
 }
 
 export type UserDb = Selectable<UsersTable>;

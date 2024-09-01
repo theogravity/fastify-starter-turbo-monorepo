@@ -12,8 +12,8 @@ declare module "fastify" {
   }
 }
 
-async function decorator(fastify: FastifyInstance, _opts) {
-  fastify.addHook("preHandler", async (request) => {
+async function plugin(fastify: FastifyInstance, _opts) {
+  fastify.addHook("onRequest", async (request) => {
     request.ctx = new ApiContext({
       db,
       log: fastify.log as unknown as LogLayer<P.Logger>,
@@ -21,4 +21,4 @@ async function decorator(fastify: FastifyInstance, _opts) {
   });
 }
 
-export const contextDecorator = fp(decorator);
+export const contextPlugin = fp(plugin);

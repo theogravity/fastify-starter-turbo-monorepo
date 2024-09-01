@@ -1,14 +1,13 @@
 import { type TypeBoxTypeProvider, TypeBoxValidatorCompiler } from "@fastify/type-provider-typebox";
 import Fastify from "fastify";
 import fp from "fastify-plugin";
-import { MockLogLayer } from "loglayer";
 import { nanoid } from "nanoid";
 import { afterAll, beforeAll } from "vitest";
 import routes from "../api";
 import { ajvPlugins } from "../api-lib/ajv-plugins";
 import { errorHandler } from "../api-lib/error-handler";
 import { getLogger } from "../utils/logger";
-import { testDecorators } from "./decorators";
+import { testPlugins } from "./plugins";
 
 export function serverTestSetup(routes: any) {
   const logger = getLogger();
@@ -18,7 +17,7 @@ export function serverTestSetup(routes: any) {
       plugins: ajvPlugins,
     },
     // @ts-ignore
-    logger: new MockLogLayer(),
+    logger,
     genReqId: () => nanoid(12),
   })
     .withTypeProvider<TypeBoxTypeProvider>()
@@ -26,7 +25,7 @@ export function serverTestSetup(routes: any) {
 
   fastify.setErrorHandler(errorHandler);
 
-  fastify.register(fp(testDecorators));
+  fastify.register(fp(testPlugins));
   fastify.register(routes);
 
   return fastify;
