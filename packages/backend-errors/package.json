@@ -15,6 +15,7 @@
   "scripts": {
     "build": "tsup src/index.ts",
     "clean": "rm -rf .turbo node_modules dist",
+    "lint": "biome check --write --unsafe src && biome format src --write && biome lint src --fix",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

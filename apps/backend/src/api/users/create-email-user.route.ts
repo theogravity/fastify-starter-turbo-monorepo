@@ -5,7 +5,7 @@ import { UserProviderSchema } from "../../api-lib/types/user-provider.type";
 import { UserSchema } from "../../api-lib/types/user.type";
 import { UserProviderType } from "../../db/types/user-providers.db-types";
 
-const CreateEMailUserRequest = Type.Object(
+const CreateEMailUserRequestSchema = Type.Object(
   {
     givenName: Type.String({
       minLength: 1,
@@ -30,7 +30,9 @@ const CreateEMailUserRequest = Type.Object(
   { $id: "CreateEMailUserRequest" },
 );
 
-const CreateEMailUserResponse = Type.Object(
+export type CreateEMailUserRequest = Static<typeof CreateEMailUserRequestSchema>;
+
+const CreateEMailUserResponseSchema = Type.Object(
   {
     user: Type.Ref(UserSchema),
     provider: Type.Ref(UserProviderSchema),
@@ -38,9 +40,11 @@ const CreateEMailUserResponse = Type.Object(
   { $id: "CreateEMailUserResponse" },
 );
 
+export type CreateEMailUserResponse = Static<typeof CreateEMailUserResponseSchema>;
+
 export async function createEMailUserRoute(fastify: FastifyInstance) {
-  fastify.addSchema(CreateEMailUserRequest);
-  fastify.addSchema(CreateEMailUserResponse);
+  fastify.addSchema(CreateEMailUserRequestSchema);
+  fastify.addSchema(CreateEMailUserResponseSchema);
 
   fastify.post(
     "/email",
@@ -49,9 +53,9 @@ export async function createEMailUserRoute(fastify: FastifyInstance) {
         operationId: "createEMailUser",
         tags: ["user"],
         description: "Create an e-mail-based account",
-        body: Type.Ref(CreateEMailUserRequest),
+        body: Type.Ref(CreateEMailUserRequestSchema),
         response: {
-          "200": Type.Ref(CreateEMailUserResponse),
+          "200": Type.Ref(CreateEMailUserResponseSchema),
         },
       },
     },
@@ -61,7 +65,7 @@ export async function createEMailUserRoute(fastify: FastifyInstance) {
 
 export async function createEMailUserController(
   request: FastifyRequest<{
-    Body: Static<typeof CreateEMailUserRequest>;
+    Body: CreateEMailUserRequest;
   }>,
   reply: FastifyReply,
 ) {
@@ -78,7 +82,7 @@ export async function createEMailUserController(
     password,
   });
 
-  const response: Static<typeof CreateEMailUserResponse> = {
+  const response: CreateEMailUserResponse = {
     user: {
       id: user.id,
       givenName: user.givenName,

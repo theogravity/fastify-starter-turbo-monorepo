@@ -16,7 +16,20 @@ export function errorHandler(error: any, request, reply) {
 
     reply.status(e.statusCode).send(e.toJSON());
   } else {
-    reply.send(error);
-    request.log.errorOnly(error);
+    const e = createApiError({
+      code: BackendErrorCodes.INTERNAL_SERVER_ERROR,
+      message: "An internal server error occurred.",
+    });
+
+    e.reqId = request.id;
+
+    request.log
+      .withContext({
+        errId: e.errId,
+        reqId: e.reqId,
+      })
+      .errorOnly(error);
+
+    reply.status(500).send(e.toJSON());
   }
 }

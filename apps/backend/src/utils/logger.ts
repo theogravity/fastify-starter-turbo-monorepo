@@ -1,6 +1,7 @@
 import { type ILogLayer, LogLayer, LoggerType } from "loglayer";
 import { type P, pino } from "pino";
 import { prettyFactory } from "pino-pretty";
+import { serializeError } from "serialize-error";
 import { IS_PROD, IS_TEST } from "../constants";
 import { asyncLocalStorage } from "./async-local-storage";
 
@@ -59,7 +60,7 @@ if (IS_TEST) {
   });
 }
 
-const logger = new LogLayer<P.Logger>({
+const loggerPortalApi = new LogLayer<P.Logger>({
   logger: {
     instance: p,
     type: LoggerType.PINO,
@@ -67,29 +68,31 @@ const logger = new LogLayer<P.Logger>({
   context: {
     fieldName: "context",
   },
-  error: {
-    fieldName: "err",
-  },
   metadata: {
     fieldName: "metadata",
+  },
+  error: {
+    fieldName: "err",
+    serializer: serializeError,
+    copyMsgOnOnlyError: true,
   },
 });
 
 if (IS_TEST) {
   // Default is off
-  logger.disableLogging();
+  loggerPortalApi.disableLogging();
 }
 
 export function getLogger(): ILogLayer<P.Logger> {
   if (IS_TEST) {
-    return logger;
+    return loggerPortalApi;
   }
 
   const store = asyncLocalStorage.getStore();
 
   if (!store) {
     // Use non-request specific logger
-    return logger;
+    return loggerPortalApi;
   }
 
   return store.logger;

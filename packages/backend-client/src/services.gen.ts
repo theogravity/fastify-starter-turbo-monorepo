@@ -8,5 +8,5 @@ import type { CreateEmailUserData, CreateEmailUserError, CreateEmailUserResponse
  */
 export const createEmailUser = (options?: Options<CreateEmailUserData>) => { return (options?.client ?? client).post<CreateEmailUserResponse, CreateEmailUserError>({
     ...options,
-    url: '/users/'
+    url: '/users/email'
 }); };

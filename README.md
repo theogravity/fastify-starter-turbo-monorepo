@@ -47,7 +47,7 @@ Perform database migrations:
 
 ## Development
 
-`turbo dev`
+`turbo watch dev`
 
 - API server: http://localhost:3080
 - OpenAPI docs: http://localhost:3080/docs
@@ -92,3 +92,36 @@ Create a new changeset entry:
 Update all package versions and generate changelogs:
 
 `pnpm changeset version`
+
+## Troubleshooting
+
+## turbo watch dev failing
+
+```
+• Packages in scope: @internal/backend, @internal/backend-client, @internal/backend-errors, @internal/tsconfig
+• Running dev in 4 packages
+• Remote caching disabled
+  × failed to connect to daemon
+  ╰─▶ server is unavailable: channel closed
+```
+
+Try:
+
+`turbo daemon clean`
+
+Then try running `turbo watch dev` again.
+
+If you get:
+
+```
+• Packages in scope: @internal/backend, @internal/backend-client, @internal/backend-errors, @internal/tsconfig
+• Running dev in 4 packages
+• Remote caching disabled
+  × discovery failed: bad grpc status code: The operation was cancelled
+```
+
+Wait a few minutes and try again.
+
+Related:
+
+- https://github.com/vercel/turborepo/issues/8491

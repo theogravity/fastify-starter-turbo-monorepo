@@ -10,10 +10,11 @@ components:
       bearerFormat: JWT
   schemas:
     UserProviderType:
-      type: string
-      title: UserProviderType
       enum:
         - EMail
+      title: Auth provider type
+      description: The type of the auth provider
+      type: string
     User:
       type: object
       properties:
@@ -38,9 +39,11 @@ components:
           description: ID of the user
           type: string
         providerType:
-          type: string
           enum:
             - EMail
+          title: Auth provider type
+          description: The type of the auth provider
+          type: string
         accountId:
           description: The account id associated with the provider
           type: string
@@ -87,7 +90,7 @@ components:
         - provider
       title: CreateEMailUserResponse
 paths:
-  /users/:
+  /users/email:
     post:
       operationId: createEMailUser
       tags:

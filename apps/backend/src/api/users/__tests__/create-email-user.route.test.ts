@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { describe, expect, it } from "vitest";
 import { testFastify } from "../../../test-utils/test-server";
+import type { CreateEMailUserResponse } from "../create-email-user.route";
 
 describe("Create e-mail user API", () => {
   it("should create an e-mail user", async () => {
@@ -16,6 +17,6 @@ describe("Create e-mail user API", () => {
     });
 
     expect(response.statusCode).toBe(200);
-    expect(response.json().user.id).toBeDefined();
+    expect(response.json<CreateEMailUserResponse>().user.id).toBeDefined();
   });
 });

@@ -8,10 +8,10 @@
     "db:migrate:create": "kysely migrate make",
     "db:migrate:latest": "kysely migrate latest",
     "db:migrate:undo": "kysely migrate down",
-    "generate": "NODE_OPTIONS=\"--import=./loader.js\" IS_GENERATING_CLIENT=true fastify generate-swagger --yaml=true dist/api/index.js > ../../packages/backend-client/openapi.yml",
+    "generate": "NODE_OPTIONS=\"--import=./loader.js\" IS_GENERATING_CLIENT=true fastify generate-swagger --yaml=true dist/api/index.js > ../../packages/backend-client/openapi.yml  | tee ../../packages/backend-client/openapi.yml",
     "build": "rm -rf dist && tsc -p tsconfig.json && pnpm run generate",
     "clean": "rm -rf .turbo node_modules dist",
-    "dev": "tsx --inspect=9230 --watch ./src/index.ts",
+    "dev": "tsx --inspect=9230 ./src/index.ts",
     "lint": "biome check --write --unsafe src && biome format src --write && biome lint src --fix",
     "prod": "NODE_OPTIONS=\"--import=./loader.js\" node ./dist/index.js",
     "typecheck": "tsc --noEmit",
@@ -19,7 +19,7 @@
     "test:ci": "vitest"
   },
   "dependencies": {
-    "@dotenvx/dotenvx": "1.7.0",
+    "@dotenvx/dotenvx": "1.12.1",
     "@fastify/cors": "9.0.1",
     "@fastify/jwt": "8.0.1",
     "@fastify/swagger": "8.15.0",
@@ -42,19 +42,20 @@
     "pg": "8.12.0",
     "pino": "9.3.2",
     "pino-pretty": "11.2.2",
+    "serialize-error": "11.0.3",
     "tsc-module-loader": "0.0.1",
     "uuid": "10.0.0"
   },
   "devDependencies": {
-    "@turbo/gen": "2.0.14",
+    "@turbo/gen": "2.1.1",
     "@faker-js/faker": "8.4.1",
     "@internal/tsconfig": "workspace:*",
-    "@testcontainers/postgresql": "10.11.0",
-    "@types/node": "22.1.0",
-    "@types/pg": "8.11.6",
+    "@testcontainers/postgresql": "10.13.0",
+    "@types/node": "22.5.2",
+    "@types/pg": "8.11.8",
     "kysely-ctl": "0.9.0",
     "ts-node": "10.9.2",
-    "tsx": "4.17.0",
+    "tsx": "4.19.0",
     "typescript": "5.5.4",
     "vitest": "2.0.5"
   }
