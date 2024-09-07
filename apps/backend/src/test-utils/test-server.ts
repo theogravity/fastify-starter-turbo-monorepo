@@ -1,4 +1,5 @@
 import { type TypeBoxTypeProvider, TypeBoxValidatorCompiler } from "@fastify/type-provider-typebox";
+import chalk from "chalk";
 import Fastify, { type InjectOptions, type LightMyRequestResponse } from "fastify";
 import fp from "fastify-plugin";
 import { nanoid } from "nanoid";
@@ -12,6 +13,10 @@ import { testPlugins } from "./plugins";
 
 declare module "fastify" {
   interface InjectOptions {
+    /**
+     * If true, the expected status code check will be disabled.
+     */
+    disableExpectedStatusCodeCheck?: boolean;
     /**
      * The expected status code of the response.
      * Default is 200.
@@ -50,34 +55,34 @@ type InjectFunction = typeof testFastify.inject;
 
 const originalInject: InjectFunction = testFastify.inject.bind(testFastify);
 
-const logger = getLogger().withPrefix("[test-result]");
-
 // @ts-ignore
-testFastify.inject = async (opts: InjectOptions, cb): Promise<LightMyRequestResponse> => {
-  const result = await originalInject(opts);
+testFastify.inject = async (opts: InjectOptions): Promise<LightMyRequestResponse> => {
   const expectedStatusCode = opts.expectedStatusCode ?? 200;
 
+  const result = await originalInject(opts);
+  let responsePayload;
+
+  try {
+    responsePayload = result.json();
+  } catch {
+    responsePayload = result.payload.toString();
+  }
+
   // Log the response if it's not what we expected
-  if (expectedStatusCode !== result.statusCode) {
-    let responsePayload;
+  if (!opts.disableExpectedStatusCodeCheck && expectedStatusCode !== result.statusCode) {
+    const expectMessage = `
 
-    try {
-      responsePayload = result.json();
-    } catch {
-      responsePayload = result.payload.toString();
-    }
+${chalk.red(`Failed request: ${opts.method} ${opts.url}`)}
+${chalk.red(`Expected status code: ${expectedStatusCode}, got ${result.statusCode}`)}
 
-    logger
-      .withMetadata({
-        request: opts,
-        response: {
-          statusCode: result.statusCode,
-          payload: responsePayload,
-        },
-      })
-      .error(`Failed request: ${opts.method} ${opts.url}`);
+${chalk.red("==== response ====")}
+${chalk.red(JSON.stringify(responsePayload, null, 2))}
 
-    expect(result.statusCode).toBe(expectedStatusCode);
+${chalk.blue("==== request ====")}
+${chalk.blue(JSON.stringify(opts, null, 2))}
+`;
+
+    expect(result.statusCode, expectMessage).toBe(expectedStatusCode);
   }
 
   return result;

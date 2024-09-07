@@ -1,4 +1,4 @@
-import type { ColumnType, Generated, GeneratedAlways, Insertable, Selectable, Updateable } from "kysely";
+import type { Generated, GeneratedAlways, Insertable, Selectable, Updateable } from "kysely";
 
 export enum UserProviderType {
   EMail = "EMail",
@@ -16,7 +16,7 @@ export interface UserProvidersTable {
   passwordAlgo?: PasswordAlgo;
   passwordHash?: string;
   createdAt: GeneratedAlways<Date>;
-  updatedAt: Generated<ColumnType<Date>>;
+  updatedAt: Generated<Date>;
 }
 
 export type UserProviderDb = Selectable<UserProvidersTable>;

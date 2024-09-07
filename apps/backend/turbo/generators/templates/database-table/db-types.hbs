@@ -1,9 +1,9 @@
-import type { ColumnType, Generated, Insertable, Selectable, Updateable } from "kysely";
+import type { ColumnType, Generated, GeneratedAlways, Insertable, Selectable, Updateable } from "kysely";
 
 export interface {{properCase tableName}}sTable {
   id: Generated<string>;
   createdAt: GeneratedAlways<Date>;
-  updatedAt: Generated<ColumnType<Date>>;
+  updatedAt: Generated<Date>;
 }
 
 export type {{properCase tableName}}Db = Selectable<{{properCase tableName}}sTable>;

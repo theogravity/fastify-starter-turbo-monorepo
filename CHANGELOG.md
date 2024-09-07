@@ -1,5 +1,11 @@
 # boilerplate-typescript-monorepo
 
+## Sept-07-2024
+
+- Added better formatting for logs
+- Test response code failures now show the request and response outputs in the log
+- Fix updatedAt type
+
 ## Sep-06-2024
 
 - Enabled logging for tests by default

@@ -23,6 +23,7 @@
     "typecheck": {},
     "lint": {},
     "test": {
+      "dependsOn": ["@internal/backend-errors#build"],
       "persistent": true,
       "interactive": true,
       "cache": false
