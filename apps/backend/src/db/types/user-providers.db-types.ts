@@ -15,7 +15,7 @@ export interface UserProvidersTable {
   providerAccountId: string;
   passwordAlgo?: PasswordAlgo;
   passwordHash?: string;
-  createdAt: Generated<ColumnType<Date, Date, never>>;
+  createdAt: GeneratedAlways<Date>;
   updatedAt: Generated<ColumnType<Date>>;
 }
 
