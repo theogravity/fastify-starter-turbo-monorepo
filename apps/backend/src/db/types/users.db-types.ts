@@ -4,7 +4,7 @@ export interface UsersTable {
   id: Generated<string>;
   givenName: string;
   familyName: string;
-  createdAt: Generated<ColumnType<Date, Date, never>>;
+  createdAt: GeneratedAlways<Date>;
   updatedAt: Generated<ColumnType<Date>>;
 }
 
