@@ -1,4 +1,4 @@
-import type { ColumnType, Generated, Insertable, Selectable, Updateable } from "kysely";
+import type { ColumnType, Generated, GeneratedAlways, Insertable, Selectable, Updateable } from "kysely";
 
 export enum UserProviderType {
   EMail = "EMail",

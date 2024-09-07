@@ -5,6 +5,8 @@ import type { CreateEMailUserResponse } from "../create-email-user.route";
 
 describe("Create e-mail user API", () => {
   it("should create an e-mail user", async () => {
+    // This inject is a custom version of the Fastify inject function
+    // that logs the response if it's not what we expected
     const response = await testFastify.inject({
       method: "POST",
       url: "/users/email",
@@ -14,9 +16,9 @@ describe("Create e-mail user API", () => {
         email: faker.internet.email(),
         password: faker.internet.password(),
       },
+      expectedStatusCode: 200,
     });
 
-    expect(response.statusCode).toBe(200);
     expect(response.json<CreateEMailUserResponse>().user.id).toBeDefined();
   });
 });

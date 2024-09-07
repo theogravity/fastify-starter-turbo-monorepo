@@ -1,5 +1,10 @@
 # boilerplate-typescript-monorepo
 
+## Sep-06-2024
+
+- Enabled logging for tests by default
+- Added auto-logging for test failures
+
 ## Sep-01-2024
 
 - Added type exports to Request / Response in the API definitions

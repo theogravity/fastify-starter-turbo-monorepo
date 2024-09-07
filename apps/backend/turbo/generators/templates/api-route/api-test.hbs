@@ -15,9 +15,9 @@ describe("{{ properCase operationName }} {{ methodType }} API", () => {
         description: faker.lorem.sentence(),
       },
       headers: {},
+      expectedStatusCode: {{ responseCode }},
     });
 
-    expect(response.statusCode).toBe({{ responseCode }});
     expect(response.json<{{ properCase operationName }}Response>().id).toBeDefined();
   });
 });

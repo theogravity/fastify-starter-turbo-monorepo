@@ -78,11 +78,6 @@ const loggerPortalApi = new LogLayer<P.Logger>({
   },
 });
 
-if (IS_TEST) {
-  // Default is off
-  loggerPortalApi.disableLogging();
-}
-
 export function getLogger(): ILogLayer<P.Logger> {
   if (IS_TEST) {
     return loggerPortalApi;
