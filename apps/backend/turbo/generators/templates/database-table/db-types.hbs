@@ -2,7 +2,7 @@ import type { ColumnType, Generated, Insertable, Selectable, Updateable } from "
 
 export interface {{properCase tableName}}sTable {
   id: Generated<string>;
-  createdAt: Generated<ColumnType<Date, Date, never>>;
+  createdAt: GeneratedAlways<Date>;
   updatedAt: Generated<ColumnType<Date>>;
 }
 
