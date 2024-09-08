@@ -41,7 +41,9 @@ export function serverTestSetup(routes: any) {
     .withTypeProvider<TypeBoxTypeProvider>()
     .setValidatorCompiler(TypeBoxValidatorCompiler);
 
-  fastify.setErrorHandler(errorHandler);
+  fastify.setErrorHandler((error, _request, reply) => {
+    reply.send(error);
+  });
 
   fastify.register(fp(testPlugins));
   fastify.register(routes);

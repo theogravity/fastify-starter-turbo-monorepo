@@ -20,27 +20,24 @@ const prettify = prettyFactory({
   messageFormat: (log: LogDescriptor, messageKey: string) => {
     let logMessage = log[messageKey];
 
+    if (log.err) {
+      logMessage += `\n${chalk.red("==== error ====\n")}${chalk.red(JSON.stringify(serializeError(log.err), null, 2).replace(/^{|}$/g, ""))}\n`;
+      delete log.err;
+    }
+
     if (log?.metadata?.err) {
-      logMessage += `\n${chalk.red("==== error ====\n\n")}${chalk.red(JSON.stringify(log.metadata?.err, null, 2).replace(/^{|}$/g, ""))}`;
+      logMessage += `\n${chalk.red("==== error ====\n")}${chalk.red(JSON.stringify(serializeError(log.metadata?.err), null, 2).replace(/^{|}$/g, ""))}\n`;
       delete log.metadata?.err;
     }
 
     if (log?.metadata) {
-      logMessage += `\n${chalk.blue("==== metadata ===\n")}${chalk.blue(JSON.stringify(log.metadata, null, 2).replace(/^{|}$/g, ""))}`;
+      logMessage += `\n${chalk.blue("==== metadata ===\n")}${chalk.blue(JSON.stringify(log.metadata, null, 2).replace(/^{|}$/g, ""))}\n`;
       delete log.metadata;
     }
 
     if (log?.context) {
-      logMessage += `\n${chalk.blue("==== context ====\n")}${chalk.blue(JSON.stringify(log.context, null, 2).replace(/^{|}$/g, ""))}`;
+      logMessage += `\n${chalk.blue("==== context ====\n")}${chalk.blue(JSON.stringify(log.context, null, 2).replace(/^{|}$/g, ""))}\n`;
       delete log.context;
-    }
-
-    if (log.context && Object.keys(log.context).length === 0) {
-      delete log.context;
-    }
-
-    if (log.metadata && Object.keys(log.metadata).length === 0) {
-      delete log.metadata;
     }
 
     return logMessage;
@@ -108,6 +105,22 @@ const logger = new LogLayer<P.Logger>({
     serializer: serializeError,
     copyMsgOnOnlyError: true,
   },
+  plugins: [
+    {
+      onBeforeMessageOut: ({ messages }) => {
+        // Check for fastify request / response logs sent to the logger
+        // and remove them from the log output
+        // The first message is an object from fastify containing
+        // the request and response objects
+        // The second message is the actual log message
+        if (messages[0]?.res && messages[1]) {
+          return [messages[1]];
+        }
+
+        return messages;
+      },
+    },
+  ],
 });
 
 if (IS_TEST) {
