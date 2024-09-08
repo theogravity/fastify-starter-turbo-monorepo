@@ -7,11 +7,23 @@ import { getLogger } from "../../utils/logger";
 export interface TestHeaders extends Record<string, string | undefined> {
   // test- prefix are test-specific headers
   "test-user-id": string;
+  "test-logging-enabled"?: string;
 }
 
 export interface TestFacets {
   user: User;
   headers: TestHeaders;
+}
+
+export interface TestFacetParams {
+  /**
+   * Enables endpoint-level logging for the test by adding a test-specific header
+   * to tell the server to enable logging.
+   *
+   * You can also use "request.log.enableLogging();" in the endpoint impl code
+   * itself to enable logging during tests.
+   */
+  withLogging?: boolean;
 }
 
 export class ApiTestingFramework {
@@ -28,7 +40,7 @@ export class ApiTestingFramework {
    * Generates a set of test facets that can be used to test the API.
    * This includes an organization, an owner user, and an API key.
    */
-  async generateTestFacets(): Promise<TestFacets> {
+  async generateTestFacets(params?: TestFacetParams): Promise<TestFacets> {
     const user = await this.context.services.users.createEMailUser({
       email: faker.internet.email(),
       password: faker.internet.password(),
@@ -40,9 +52,12 @@ export class ApiTestingFramework {
 
     return {
       user,
-      headers: this.generateTestHeaders({
-        user,
-      }),
+      headers: this.generateTestHeaders(
+        {
+          user,
+        },
+        params,
+      ),
     };
   }
 
@@ -64,9 +79,10 @@ export class ApiTestingFramework {
     return users;
   }
 
-  private generateTestHeaders(facets: Omit<TestFacets, "headers">): TestHeaders {
+  private generateTestHeaders(facets: Omit<TestFacets, "headers">, params?: TestFacetParams): TestHeaders {
     return {
       "test-user-id": facets.user.id,
+      ...(params?.withLogging ? { "test-logging-enabled": "true" } : { "test-logging-enabled": "false" }),
     };
   }
 }

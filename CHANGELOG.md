@@ -5,6 +5,7 @@
 - Added better formatting for logs
 - Test response code failures now show the request and response outputs in the log
 - Fix updatedAt type
+- Disabled logging for tests by default now that we have proper error logging for request failures
 
 ## Sep-06-2024
 
