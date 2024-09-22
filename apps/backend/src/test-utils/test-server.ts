@@ -35,16 +35,13 @@ export function serverTestSetup(routes: any) {
       plugins: ajvPlugins,
     },
     // @ts-ignore
-    logger,
+    loggerInstance: logger,
     genReqId: () => nanoid(12),
   })
     .withTypeProvider<TypeBoxTypeProvider>()
     .setValidatorCompiler(TypeBoxValidatorCompiler);
 
-  fastify.setErrorHandler((error, _request, reply) => {
-    reply.send(error);
-  });
-
+  fastify.setErrorHandler(errorHandler);
   fastify.register(fp(testPlugins));
   fastify.register(routes);
 

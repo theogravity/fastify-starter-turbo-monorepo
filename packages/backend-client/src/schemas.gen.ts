@@ -12,6 +12,7 @@ export const $User = {
     properties: {
         id: {
             description: 'ID of the user',
+            format: 'uuid',
             type: 'string'
         },
         givenName: {
@@ -32,6 +33,7 @@ export const $UserProvider = {
     properties: {
         userId: {
             description: 'ID of the user',
+            format: 'uuid',
             type: 'string'
         },
         providerType: {

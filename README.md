@@ -1,9 +1,10 @@
 # Fastify Turbo Monorepo Starter
 
-This is a starter project for building an API server using Typescript, Fastify and Kysely with Postgres. 
+This is a starter project for building an API server using Typescript, Fastify v5 and Kysely with Postgres. 
 
 ## Features
 
+- Fastify v5 with Typescript.
 - It is setup as a monorepo using [`turbo`](https://turbo.build/) and [`pnpm`](https://pnpm.io/).
 - Outputs OpenAPI schema for the API and has a web UI for viewing it.
 - A sample REST test is included using Vitest.
@@ -11,6 +12,7 @@ This is a starter project for building an API server using Typescript, Fastify a
 - An client SDK package is included to generate typescript client code from the API schema.
 - An error handler package is included to handle errors and return a consistent response.
 - Code generators using `turbo gen` to create new API endpoints and database tables.
+- Publish packages to npm and generate changelogs and releases using [`changesets`](https://github.com/changesets/changesets).
 
 ## Libraries and tools used
 
@@ -20,6 +22,7 @@ This is a starter project for building an API server using Typescript, Fastify a
 - [`commitlint`](https://commitlint.js.org/) for commit message linting
 - [`turbo`](https://turbo.build/) for monorepo management
 - [`fastify`](https://www.fastify.io/) for the API server framework
+- [`hash-runner`](https://github.com/theogravity/hash-runner) for caching builds
 - [`kysely`](https://kysely.dev/) for the database query builder
 - [`postgres`](https://www.postgresql.org/) + pgAdmin for the database
 - [`testcontainers`](https://www.testcontainers.org/) for testing with a sandboxed postgres instance
@@ -44,6 +47,14 @@ Start local postgres server:
 Perform database migrations:
 
 `pnpm db:migrate:lastest`
+
+In Github settings (to publish packages and changelogs):
+- Edit `.changeset/config.json` to your repository
+- `Code and Automation > Actions > Workflow permissions`
+    * `Read and write permissions`
+    * `Allow Github Actions to create and approve pull requests`
+- `Secrets and variables > Actions`
+    * `Repository Secrets > Actions > create NPM_TOKEN > your npm publish token`
 
 ## Development
 
@@ -83,15 +94,16 @@ Generators for the following:
 
 `pnpm syncpack:update`
 
-## Add a new CHANGELOG.md entry + package versioning
+## Development workflow / Add a new CHANGELOG.md entry + package versioning
 
-Create a new changeset entry:
+- Create a branch and make changes.
+- Create a new changeset entry: `pnpm changeset`
+- Commit your changes and create a pull request.
+- Merge the pull request 
+- A new PR will be created with the changeset entry/ies.
+- When the PR is merged, the package versions will be bumped and published and the changelog updated.
 
-`pnpm changeset`
-
-Update all package versions and generate changelogs:
-
-`pnpm changeset version`
+**note: To publish a package, `private: false` must be set in the package.json**
 
 ## Troubleshooting
 

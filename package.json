@@ -4,32 +4,42 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "start": "turbo watch dev",
+    "add-changeset": "changeset add",
+    "build": "turbo run build",
     "changeset": "changeset",
     "db:migrate:create": "cd apps/backend && pnpm run db:migrate:create",
     "db:migrate:latest": "cd apps/backend && pnpm run db:migrate:latest",
     "db:migrate:undo": "cd apps/backend && pnpm run db:migrate:undo",
-    "clean:git": "git clean -xdf node_modules",
-    "clean:workspaces": "apps/backend/turbo clean",
+    "clean:repo": "git add --all && git reset --hard",
+    "clean:workspaces": "turbo clean",
+    "clean:node_modules": "find . -name \"node_modules\" -type d -prune -exec rm -rf '{}' +\n",
     "lint": "turbo run lint --continue --",
+    "lint:packages": "pnpm run lint:packages:semver && pnpm run lint:packages:mismatches",
+    "lint:packages:semver": "syncpack lint-semver-ranges",
+    "lint:packages:mismatches": "syncpack list-mismatches",
+    "publish-packages": "turbo run build && changeset version && changeset publish",
     "typecheck": "turbo run typecheck --continue --",
     "syncpack:update": "syncpack update && syncpack fix-mismatches && pnpm i",
     "syncpack:format": "syncpack format",
     "syncpack:lint": "syncpack lint",
+    "release": "changeset publish",
+    "version-packages": "changeset version",
     "prepare": "husky"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.3",
+    "@biomejs/biome": "1.9.2",
     "@changesets/changelog-github": "0.5.0",
     "@changesets/cli": "2.27.8",
-    "@commitlint/cli": "19.4.1",
-    "@commitlint/config-conventional": "19.4.1",
+    "@commitlint/cli": "19.5.0",
+    "@commitlint/config-conventional": "19.5.0",
     "@internal/tsconfig": "workspace:*",
-    "@types/node": "22.5.4",
-    "husky": "9.1.5",
+    "@types/node": "22.5.5",
+    "husky": "9.1.6",
     "lint-staged": "15.2.10",
     "syncpack": "13.0.0",
-    "turbo": "2.1.1",
-    "typescript": "5.5.4"
+    "turbo": "2.1.2",
+    "typescript": "5.6.2"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx,html,css,json}": [
@@ -45,5 +55,5 @@
     "node": ">=20.16.0"
   },
   "engineStrict": true,
-  "packageManager": "pnpm@9.9.0"
+  "packageManager": "pnpm@9.11.0"
 }

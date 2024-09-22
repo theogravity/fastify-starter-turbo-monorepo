@@ -1,15 +1,15 @@
 import { faker } from "@faker-js/faker";
 import { describe, expect, it } from "vitest";
+import { testFramework } from "../../../test-utils/test-framework";
 import { testFastify } from "../../../test-utils/test-server";
 import type { CreateEMailUserResponse } from "../create-email-user.route";
-import {testFramework} from "../../../test-utils/test-framework";
 
 describe("Create e-mail user API", () => {
   it("should create an e-mail user", async () => {
     const { headers } = await testFramework.generateTestFacets({
       // Enables server-side logging for this test
       withLogging: true,
-    })
+    });
 
     // This inject is a custom version of the Fastify inject function
     // that logs the response if it's not what we expected

@@ -3,6 +3,9 @@ import type { Database } from "../types";
 import type { NewUser, UserDb, UserUpdate } from "../types/users.db-types";
 import { BaseRepository } from "./base.repository";
 
+/**
+ * Stores profile information for users.
+ */
 export class UsersRepository extends BaseRepository {
   async createUser({
     db,

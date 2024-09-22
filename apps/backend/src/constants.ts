@@ -17,3 +17,4 @@ export const DB_PASS = env.get("DB_PASS").required().asString();
 export const IS_GENERATING_CLIENT = env.get("IS_GENERATING_CLIENT").default("false").asBoolStrict();
 export const IS_PROD = process.env.NODE_ENV === "production";
 export const IS_TEST = process.env.NODE_ENV === "test";
+export const BACKEND_LOG_LEVEL = env.get("BACKEND_LOG_LEVEL").default("debug").asString();

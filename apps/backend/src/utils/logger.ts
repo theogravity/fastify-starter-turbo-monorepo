@@ -3,7 +3,7 @@ import { type ILogLayer, LogLayer, LoggerType } from "loglayer";
 import { type LogDescriptor, type P, pino } from "pino";
 import { prettyFactory } from "pino-pretty";
 import { serializeError } from "serialize-error";
-import { IS_PROD, IS_TEST } from "../constants";
+import { BACKEND_LOG_LEVEL, IS_PROD, IS_TEST } from "../constants";
 import { asyncLocalStorage } from "./async-local-storage";
 
 declare module "fastify" {
@@ -52,16 +52,29 @@ const pinoOpts = {
       return;
     }
 
-    process.stdout.write(
-      prettify({
-        level: d.level,
-        time: d.time,
-        msg: d.msg,
-        context: d.context,
-        metadata: d.metadata,
-        err: d.err,
-      }),
-    );
+    if (IS_TEST) {
+      console.log(
+        prettify({
+          level: d.level,
+          time: d.time,
+          msg: d.msg,
+          context: d.context,
+          metadata: d.metadata,
+          err: d.err,
+        }),
+      );
+    } else {
+      process.stdout.write(
+        prettify({
+          level: d.level,
+          time: d.time,
+          msg: d.msg,
+          context: d.context,
+          metadata: d.metadata,
+          err: d.err,
+        }),
+      );
+    }
   },
 };
 
@@ -70,19 +83,19 @@ const pinoOpts = {
 if (IS_TEST) {
   p = pino(
     {
-      level: "debug",
+      level: BACKEND_LOG_LEVEL,
       base: null,
     },
     pinoOpts,
   );
 } else if (IS_PROD) {
   p = pino({
-    level: "error",
+    level: BACKEND_LOG_LEVEL,
   });
 } else {
   p = pino(
     {
-      level: "debug",
+      level: BACKEND_LOG_LEVEL,
       base: null,
     },
     pinoOpts,

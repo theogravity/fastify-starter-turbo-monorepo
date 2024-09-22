@@ -6,7 +6,9 @@ async function plugin(fastify: FastifyInstance, _opts) {
     // Because we're running a server in a test environment, if we want to enable logging
     // we need to set a header to enable it.
     if (request.headers["test-logging-enabled"] === "true") {
+      request.ctx.log.enableLogging();
       request.log.enableLogging();
+      fastify.log.enableLogging();
     }
     done();
   });

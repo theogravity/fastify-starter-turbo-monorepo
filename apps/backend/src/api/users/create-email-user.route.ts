@@ -1,6 +1,5 @@
 import { type Static, Type } from "@sinclair/typebox";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { sanitizeKeyword } from "../../api-lib/keywords/sanitize.keyword";
 import { UserProviderSchema } from "../../api-lib/types/user-provider.type";
 import { UserSchema } from "../../api-lib/types/user.type";
 import { UserProviderType } from "../../db/types/user-providers.db-types";
@@ -10,12 +9,10 @@ const CreateEMailUserRequestSchema = Type.Object(
     givenName: Type.String({
       minLength: 1,
       maxLength: 50,
-      ...sanitizeKeyword(),
     }),
     familyName: Type.String({
       minLength: 1,
       maxLength: 100,
-      ...sanitizeKeyword(),
     }),
     email: Type.String({
       minLength: 3,

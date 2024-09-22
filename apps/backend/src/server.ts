@@ -19,7 +19,7 @@ export async function startServer({
 
   const fastify = Fastify({
     // @ts-ignore
-    logger,
+    loggerInstance: logger,
     disableRequestLogging: true,
     ajv: {
       plugins: ajvPlugins,

@@ -20,6 +20,7 @@ components:
       properties:
         id:
           description: ID of the user
+          format: uuid
           type: string
         givenName:
           description: Given name of the user
@@ -37,6 +38,7 @@ components:
       properties:
         userId:
           description: ID of the user
+          format: uuid
           type: string
         providerType:
           enum:

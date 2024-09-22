@@ -5,31 +5,26 @@
     "biome.json",
     "packages/tsconfig/**"
   ],
-  "ui": "tui",
   "tasks": {
+    "build:dev": {},
     "build": {
       "dependsOn": ["lint", "^build"],
       "cache": true,
       "inputs": [
-        "packages/backend-errors/**",
-        "!packages/backend-errors/dist/**",
-        "apps/backend-api/**",
-        "!apps/backend-api/dist/**",
-        "apps/backend/**",
-        "!apps/backend/.next/**"
+        "$TURBO_DEFAULT$",
+        ".env*"
       ],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "typecheck": {},
     "lint": {},
     "test": {
-      "dependsOn": ["@internal/backend-errors#build"],
+      "dependsOn": ["@internal/backend-errors#build:dev"],
       "persistent": true,
-      "interactive": true,
       "cache": false
     },
     "build:backend": {
-      "dependsOn": ["@internal/backend#lint","@internal/backend#build"],
+      "dependsOn": ["@internal/backend#lint","@internal/backend#build:dev"],
       "cache": true,
       "inputs": ["apps/backend-api/**", "!apps/backend-api/dist/**"],
       "outputs": [
@@ -40,17 +35,12 @@
     "generate:sdk": {
       "dependsOn": [
         "build:backend",
-        "@internal/backend-client#build"
+        "@internal/backend-client#build:dev"
       ],
-      "cache": true,
-      "inputs": [
-        "apps/backend-api/dist/api/**",
-        "packages/backend-client/openapi.yml"
-      ],
-      "outputs": ["packages/backend-client/dist/**"]
+      "cache": true
     },
     "dev": {
-      "dependsOn": ["@internal/backend-errors#build"],
+      "dependsOn": ["build:dev"],
       "cache": false,
       "persistent": true
     },

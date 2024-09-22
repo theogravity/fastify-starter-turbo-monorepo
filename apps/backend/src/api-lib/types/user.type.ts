@@ -4,6 +4,7 @@ export const UserSchema = Type.Object(
   {
     id: Type.String({
       description: "ID of the user",
+      format: "uuid",
     }),
     givenName: Type.String({
       description: "Given name of the user",

@@ -1,5 +1,15 @@
 # boilerplate-typescript-monorepo
 
+## Sept-21-2024
+
+- Upgrade fastify to v5, all packages to latest versions
+- Better error handling for the backend
+- Fixed bugs around logs not showing in certain cases during tests
+- Add package publishing support
+- Add dev build caching for faster builds during dev
+- Removed AJV sanitize plugin. In real-world usage, you wouldn't want to sanitize the input to your API immediately, but later on.
+
+
 ## Sept-07-2024
 
 - Added better formatting for logs

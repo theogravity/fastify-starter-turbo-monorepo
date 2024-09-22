@@ -1,0 +1,58 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PNPM_CACHE_FOLDER: .pnpm-store
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    name: Releasing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Use pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9.11.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: setup pnpm config
+        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build workspace packages
+        run: pnpm build
+
+      - name: Run package checking
+        run: pnpm run lint:packages
+
+      - name: Run type checking
+        run: pnpm run typecheck
+
+      - name: Run linting
+        run: pnpm run lint
+
+      - name: Create Release Pull Request / Publish Packages
+        uses: changesets/action@v1
+        with:
+          publish: pnpm run release
+          version: pnpm run version-packages
+          commit: 'chore: release package(s)'
+          title: 'chore: release package(s)'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

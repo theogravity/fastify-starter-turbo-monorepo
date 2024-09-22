@@ -5,6 +5,7 @@ export const UserProviderSchema = Type.Object(
   {
     userId: Type.String({
       description: "ID of the user",
+      format: "uuid",
     }),
     providerType: UserProviderTypeSchema,
     accountId: Type.String({

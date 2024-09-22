@@ -4,3 +4,5 @@ This directory contains the database repositories. Each repository is responsibl
 
 Services would use and combine these repositories to perform operations on the database.
 
+You should not use repositories in a controller. Instead, use services to implement the behavior you need using the 
+repositories.

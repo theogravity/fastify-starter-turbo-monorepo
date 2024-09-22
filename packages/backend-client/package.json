@@ -14,6 +14,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "openapi-ts && tsup src/index.ts",
+    "build:dev": "hash-runner",
     "clean": "rm -rf .turbo node_modules dist",
     "typecheck": "tsc --noEmit"
   },
@@ -22,6 +23,7 @@
     "@hey-api/client-fetch": "0.1.14",
     "@internal/tsconfig": "workspace:*",
     "@internal/backend": "workspace:*",
-    "tsup": "8.2.4"
+    "hash-runner": "2.0.1",
+    "tsup": "8.3.0"
   }
 }
