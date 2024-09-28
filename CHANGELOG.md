@@ -1,4 +1,11 @@
-# boilerplate-typescript-monorepo
+# fastify-starter-turbo-monorepo
+
+## Sept-28-2024
+
+- Breaking: Change the format of `ApiError` to simplify validation errors
+- Update the error handler to use the new `ApiError` format
+- Package updates
+- Add url path to log context
 
 ## Sept-21-2024
 
@@ -8,7 +15,6 @@
 - Add package publishing support
 - Add dev build caching for faster builds during dev
 - Removed AJV sanitize plugin. In real-world usage, you wouldn't want to sanitize the input to your API immediately, but later on.
-
 
 ## Sept-07-2024
 

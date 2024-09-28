@@ -6,7 +6,9 @@
     "packages/tsconfig/**"
   ],
   "tasks": {
-    "build:dev": {},
+    "build:dev": {
+      "cache": false
+    },
     "build": {
       "dependsOn": ["lint", "^build"],
       "cache": true,

@@ -14,9 +14,16 @@ declare module "fastify" {
 
 async function plugin(fastify: FastifyInstance, _opts) {
   fastify.addHook("onRequest", async (request) => {
+    if (request.url) {
+      // @ts-ignore
+      request.log = request.log.withContext({
+        apiPath: request.url,
+      });
+    }
+
     request.ctx = new ApiContext({
       db,
-      log: fastify.log as unknown as LogLayer<P.Logger>,
+      log: request.log as unknown as LogLayer<P.Logger>,
     });
   });
 }

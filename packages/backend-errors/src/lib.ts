@@ -7,6 +7,12 @@ import { BackendErrorCodeDefs, type BackendErrorCodes } from "./error-codes";
 
 const stackFilter = (path) => !/backend-errors/.test(path);
 
+export interface ApiValidationError {
+  validation: ErrorObject[];
+  validationContext: string;
+  message: string;
+}
+
 export interface ApiErrorParams {
   /**
    * Error code
@@ -30,12 +36,9 @@ export interface ApiErrorParams {
   metadataSafe?: Record<string, any>;
   /**
    * AJV-style validation errors
+   * @see https://fastify.dev/docs/latest/Reference/Validation-and-Serialization/#validation-messages-with-other-validation-libraries
    */
-  validation?: ErrorObject[];
-  /**
-   * Context of the validation errors
-   */
-  validationContext?: string;
+  validationError?: ApiValidationError;
   /**
    * Error object.
    */
@@ -49,6 +52,10 @@ export interface ApiErrorParams {
    * Log level to use for the error. Default is "error".
    */
   logLevel?: "error" | "warn" | "info" | "debug" | "trace" | "fatal";
+  /**
+   * Don't log the error in the error handler as it has been logged elsewhere.
+   */
+  doNotLog?: boolean;
 }
 
 export class ApiError extends Error {
@@ -77,14 +84,6 @@ export class ApiError extends Error {
    */
   reqId?: string;
   /**
-   * AJV-style validation errors
-   */
-  validation?: ErrorObject[];
-  /**
-   * Context of the validation errors
-   */
-  validationContext?: string;
-  /**
    * Error object
    */
   causedBy?: any;
@@ -97,6 +96,15 @@ export class ApiError extends Error {
    * Log level to use for the error. Default is "error".
    */
   logLevel?: "error" | "warn" | "info" | "debug" | "trace" | "fatal";
+  /**
+   * AJV-style validation errors
+   * @see https://fastify.dev/docs/latest/Reference/Validation-and-Serialization/#validation-messages-with-other-validation-libraries
+   */
+  validationError?: ApiValidationError;
+  /**
+   * Don't log the error in the error handler as it has been logged elsewhere.
+   */
+  doNotLog?: boolean;
 
   constructor({
     code,
@@ -104,11 +112,11 @@ export class ApiError extends Error {
     statusCode,
     metadata,
     metadataSafe,
-    validation,
-    validationContext,
+    validationError,
     causedBy,
     isInternalError,
     logLevel,
+    doNotLog,
   }: ApiErrorParams) {
     super(message);
     this.errId = nanoid(12);
@@ -116,11 +124,11 @@ export class ApiError extends Error {
     this.statusCode = statusCode;
     this.metadata = metadata;
     this.metadataSafe = metadataSafe;
-    this.validation = validation;
-    this.validationContext = validationContext;
+    this.validationError = validationError;
     this.causedBy = causedBy;
     this.isInternalError = isInternalError || false;
     this.logLevel = logLevel || "error";
+    this.doNotLog = doNotLog || false;
 
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, ApiError);
@@ -169,8 +177,7 @@ export class ApiError extends Error {
       statusCode: this.statusCode,
       ...metadata,
       ...(causedBy ? { causedBy } : {}),
-      ...(this.validation ? { validation: this.validation } : {}),
-      ...(this.validationContext ? { validationContext: this.validationContext } : {}),
+      ...(this.validationError ? { validationError: this.validationError } : {}),
       stack: this.stack,
     };
   }
@@ -190,22 +197,14 @@ export class ApiError extends Error {
       message: this.message,
       statusCode: this.statusCode,
       ...(this.metadataSafe ? { metadata: this.metadataSafe } : {}),
-      ...(this.validation ? { validation: this.validation } : {}),
-      ...(this.validationContext ? { validationContext: this.validationContext } : {}),
+      ...(this.validationError ? { validationError: this.validationError } : {}),
     };
   }
 }
 
 export type ApiErrorShort = Pick<
   ApiErrorParams,
-  | "metadataSafe"
-  | "logLevel"
-  | "isInternalError"
-  | "code"
-  | "metadata"
-  | "validation"
-  | "validationContext"
-  | "causedBy"
+  "doNotLog" | "metadataSafe" | "logLevel" | "isInternalError" | "code" | "metadata" | "validationError" | "causedBy"
 > & {
   message?: string;
 };
@@ -218,23 +217,23 @@ export function throwApiError({
   code,
   metadata,
   metadataSafe,
-  validation,
-  validationContext,
+  validationError,
   message,
   causedBy,
   isInternalError,
   logLevel,
+  doNotLog,
 }: ApiErrorShort) {
   throw createApiError({
     code,
     message,
     metadata,
     metadataSafe,
-    validation,
-    validationContext,
+    validationError,
     causedBy,
     isInternalError,
     logLevel,
+    doNotLog,
   });
 }
 
@@ -247,11 +246,11 @@ export function createApiError({
   message,
   metadata,
   metadataSafe,
-  validation,
-  validationContext,
+  validationError,
   causedBy,
   isInternalError,
   logLevel,
+  doNotLog,
 }: ApiErrorShort) {
   const { message: predefinedMessage, statusCode } = BackendErrorCodeDefs[code];
 
@@ -261,11 +260,11 @@ export function createApiError({
     statusCode,
     metadata,
     metadataSafe,
-    validation,
-    validationContext,
+    validationError,
     causedBy,
     isInternalError,
     logLevel,
+    doNotLog,
   });
 }
 
