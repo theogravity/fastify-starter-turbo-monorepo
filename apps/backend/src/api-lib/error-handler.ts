@@ -1,10 +1,11 @@
 import { ApiError, BackendErrorCodes, createApiError } from "@internal/backend-errors";
 import { IS_PROD } from "../constants";
+import { removeQueryParametersFromPath } from "../utils/remove-query-params";
 
 export function errorHandler(error: any, request, reply) {
   if (request.url) {
     request.log.withContext({
-      apiPath: request.url,
+      apiPath: removeQueryParametersFromPath(request.url),
     });
   }
 

@@ -4,6 +4,7 @@ import type { LogLayer } from "loglayer";
 import type { P } from "pino";
 import { ApiContext } from "../api-lib/context";
 import { db } from "../db";
+import { removeQueryParametersFromPath } from "../utils/remove-query-params";
 
 declare module "fastify" {
   interface FastifyRequest {
@@ -17,7 +18,7 @@ async function plugin(fastify: FastifyInstance, _opts) {
     if (request.url) {
       // @ts-ignore
       request.log = request.log.withContext({
-        apiPath: request.url,
+        apiPath: removeQueryParametersFromPath(request.url),
       });
     }
 

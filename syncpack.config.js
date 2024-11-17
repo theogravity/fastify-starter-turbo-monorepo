@@ -8,19 +8,16 @@ module.exports = {
     "dependencies": ["**"],
     "packages": ["**"]
   }],
-  "versionGroups": [{
-    "label": "use workspace protocol for local packages",
-    "dependencies": ["$LOCAL"],
-    "dependencyTypes": ["!local"],
-    "pinVersion": "workspace:*"
-  },
+  "versionGroups": [
     {
-      "dependencies": ["@hey-api/openapi-ts"],
-      "pinVersion": "0.51.0"
+      "label": "use workspace protocol for local packages",
+      "dependencies": ["$LOCAL"],
+      "dependencyTypes": ["!local"],
+      "pinVersion": "workspace:*"
     },
     {
-      "dependencies": ["@hey-api/client-fetch"],
-      "pinVersion": "0.1.14"
+      "dependencies": ["@sinclair/typebox"],
+      "pinVersion": "0.33.22"
     }
   ]
 }

@@ -1,5 +1,15 @@
 # fastify-starter-turbo-monorepo
 
+## Nov-17-2024
+
+- Remove `lint-staged`. Wasn't being used.
+- Update `husky` `commit-msg` to run more linting and formatting checks
+- Update packages to latest versions
+  * Pinned `@sinclair/typebox` to `0.33.22` and not `0.34.00` due to [a breaking change](https://github.com/sinclairzx81/typebox/blob/master/changelog/0.34.0.md) with `Static` 
+- Removes query params from `apiPath` in the log context for security reasons
+- **Breaking:** Removes `strictNullChecks=false` in the tsconfig for better type safety
+- **Breaking**: `typechecks` script is now `verify-types`
+
 ## Sept-28-2024
 
 - Breaking: Change the format of `ApiError` to simplify validation errors

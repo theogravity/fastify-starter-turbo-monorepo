@@ -23,7 +23,7 @@ export class UsersRepository extends BaseRepository {
   }: {
     db: Kysely<Database>;
     userId: string;
-  }): Promise<UserDb | null> {
+  }): Promise<UserDb | undefined> {
     return db.selectFrom("users").selectAll().where("id", "=", userId).executeTakeFirst();
   }
 
@@ -39,11 +39,13 @@ export class UsersRepository extends BaseRepository {
 
   async updateUser({
     db,
+    userId,
     user,
   }: {
     db: Kysely<Database>;
+    userId: string;
     user: UserUpdate;
   }): Promise<UserDb> {
-    return db.updateTable("users").set(user).where("id", "=", user.id).returningAll().executeTakeFirstOrThrow();
+    return db.updateTable("users").set(user).where("id", "=", userId).returningAll().executeTakeFirstOrThrow();
   }
 }
