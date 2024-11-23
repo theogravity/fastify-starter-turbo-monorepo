@@ -11,11 +11,6 @@
     },
     "build": {
       "dependsOn": ["lint", "^build"],
-      "cache": true,
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        ".env*"
-      ],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "verify-types": {},
@@ -30,13 +25,11 @@
       "cache": true,
       "inputs": ["apps/backend-api/**", "!apps/backend-api/dist/**"],
       "outputs": [
-        "apps/backend/dist/**",
-        "packages/backend-client/openapi.yml"
+        "apps/backend/dist/**"
       ]
     },
     "generate:sdk": {
       "dependsOn": [
-        "build:backend",
         "@internal/backend-client#build:dev"
       ],
       "cache": true

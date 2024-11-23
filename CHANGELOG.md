@@ -1,5 +1,10 @@
 # fastify-starter-turbo-monorepo
 
+## Nov-23-2024
+
+- Client SDK generation no longer dependent on the backend build
+- Faster openapi.yml generation
+
 ## Nov-17-2024
 
 - Remove `lint-staged`. Wasn't being used.
