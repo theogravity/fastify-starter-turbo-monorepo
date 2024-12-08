@@ -21,8 +21,8 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@hey-api/openapi-ts": "0.57.0",
-    "@hey-api/client-fetch": "0.4.4",
+    "@hey-api/openapi-ts": "0.59.1",
+    "@hey-api/client-fetch": "0.5.2",
     "@internal/tsconfig": "workspace:*",
     "@internal/backend": "workspace:*",
     "hash-runner": "2.0.1",

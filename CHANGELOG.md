@@ -1,5 +1,9 @@
 # fastify-starter-turbo-monorepo
 
+## Dec-7-2024
+
+- Package updates.
+
 ## Nov-23-2024
 
 - Client SDK generation no longer dependent on the backend build

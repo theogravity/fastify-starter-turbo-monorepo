@@ -52,10 +52,10 @@ export type providerType = 'EMail';
  */
 export type UserProviderType = 'EMail';
 
-export type CreateEmailUserData = {
+export type CreateEMailUserData = {
     body?: CreateEMailUserRequest;
 };
 
-export type CreateEmailUserResponse = (CreateEMailUserResponse);
+export type CreateEMailUserResponse2 = (CreateEMailUserResponse);
 
-export type CreateEmailUserError = unknown;
+export type CreateEMailUserError = unknown;
