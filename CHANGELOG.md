@@ -1,5 +1,10 @@
 # fastify-starter-turbo-monorepo
 
+## Jan-1-2025
+
+- Package updates.
+- Use version 5 of `loglayer`.
+
 ## Dec-7-2024
 
 - Package updates.

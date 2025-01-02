@@ -1,5 +1,6 @@
+import { PinoTransport } from "@loglayer/transport-pino";
 import chalk from "chalk";
-import { type ILogLayer, LogLayer, LoggerType } from "loglayer";
+import { type ILogLayer, LogLayer } from "loglayer";
 import { type LogDescriptor, type P, pino } from "pino";
 import { prettyFactory } from "pino-pretty";
 import { serializeError } from "serialize-error";
@@ -7,7 +8,7 @@ import { BACKEND_LOG_LEVEL, IS_PROD, IS_TEST } from "../constants";
 import { asyncLocalStorage } from "./async-local-storage";
 
 declare module "fastify" {
-  interface FastifyBaseLogger extends LogLayer<P.Logger> {}
+  interface FastifyBaseLogger extends LogLayer {}
 }
 
 let p: P.Logger;
@@ -102,22 +103,15 @@ if (IS_TEST) {
   );
 }
 
-const logger = new LogLayer<P.Logger>({
-  logger: {
-    instance: p,
-    type: LoggerType.PINO,
-  },
-  context: {
-    fieldName: "context",
-  },
-  metadata: {
-    fieldName: "metadata",
-  },
-  error: {
-    fieldName: "err",
-    serializer: serializeError,
-    copyMsgOnOnlyError: true,
-  },
+const logger = new LogLayer({
+  transport: new PinoTransport({
+    logger: p,
+  }),
+  contextFieldName: "context",
+  metadataFieldName: "metadata",
+  errorFieldName: "err",
+  errorSerializer: serializeError,
+  copyMsgOnOnlyError: true,
   plugins: [
     {
       onBeforeMessageOut: ({ messages }) => {
@@ -140,7 +134,7 @@ if (IS_TEST) {
   logger.disableLogging();
 }
 
-export function getLogger(): ILogLayer<P.Logger> {
+export function getLogger(): ILogLayer {
   if (IS_TEST) {
     return logger;
   }
