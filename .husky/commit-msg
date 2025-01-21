@@ -1,5 +1,0 @@
-pnpm dlx commitlint --edit $1
-pnpm run syncpack:format
-pnpm run syncpack:lint
-pnpm run lint
-pnpm run verify-types

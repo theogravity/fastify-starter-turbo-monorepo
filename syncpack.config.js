@@ -14,10 +14,6 @@ module.exports = {
       "dependencies": ["$LOCAL"],
       "dependencyTypes": ["!local"],
       "pinVersion": "workspace:*"
-    },
-    {
-      "dependencies": ["@sinclair/typebox"],
-      "pinVersion": "0.33.22"
     }
   ]
 }

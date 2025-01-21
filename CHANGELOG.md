@@ -1,5 +1,9 @@
 # fastify-starter-turbo-monorepo
 
+## Jan-20-2025
+
+- Package updates.
+
 ## Jan-1-2025
 
 - Package updates.
