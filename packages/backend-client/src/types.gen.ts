@@ -62,3 +62,7 @@ export type CreateEMailUserResponses = {
 };
 
 export type CreateEMailUserResponse2 = CreateEMailUserResponses[keyof CreateEMailUserResponses];
+
+export type ClientOptions = {
+    baseUrl: `${string}://openapi.yml` | (string & {});
+};

@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "clean-stack": "5.2.0",
-    "nanoid": "5.0.9",
+    "nanoid": "5.1.4",
     "serialize-error": "12.0.0",
     "sprintf-js": "1.1.3"
   },
@@ -30,7 +30,7 @@
     "@internal/tsconfig": "workspace:*",
     "ajv": "8.17.1",
     "hash-runner": "2.0.1",
-    "tsup": "8.3.5"
+    "tsup": "8.4.0"
   },
   "peerDependencies": {
     "ajv": "8.17.1"
