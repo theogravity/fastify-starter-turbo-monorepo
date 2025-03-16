@@ -1,5 +1,11 @@
 # fastify-starter-turbo-monorepo
 
+## Mar-16-2025
+
+- Remove husky in favor of lefthook
+- Use the loglayer pretty terminal for dev and tests modes
+- Package updates.
+
 ## Jan-20-2025
 
 - Package updates.
