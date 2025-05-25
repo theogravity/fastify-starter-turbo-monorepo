@@ -1,9 +1,9 @@
+import { apiTypes } from "@/api-lib/types/index.js";
+import { registerResourceRoutes } from "@/api/routes.js";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import type { FastifyInstance } from "fastify";
 import fp from "fastify-plugin";
-import { apiTypes } from "../api-lib/types";
-import { registerResourceRoutes } from "./routes";
 
 export default async function routes(fastify: FastifyInstance, _opts) {
   fastify.register(fastifySwagger, {

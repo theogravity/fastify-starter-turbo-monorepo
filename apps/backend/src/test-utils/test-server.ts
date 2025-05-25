@@ -1,3 +1,8 @@
+import { ajvPlugins } from "@/api-lib/ajv-plugins.js";
+import { errorHandler } from "@/api-lib/error-handler.js";
+import routes from "@/api/index.js";
+import { testPlugins } from "@/test-utils/plugins/index.js";
+import { getLogger } from "@/utils/logger.js";
 import { type TypeBoxTypeProvider, TypeBoxValidatorCompiler } from "@fastify/type-provider-typebox";
 import chalk from "chalk";
 import Fastify, { type InjectOptions, type LightMyRequestResponse } from "fastify";
@@ -5,11 +10,6 @@ import fp from "fastify-plugin";
 import { nanoid } from "nanoid";
 import { expect } from "vitest";
 import { afterAll, beforeAll } from "vitest";
-import routes from "../api";
-import { ajvPlugins } from "../api-lib/ajv-plugins";
-import { errorHandler } from "../api-lib/error-handler";
-import { getLogger } from "../utils/logger";
-import { testPlugins } from "./plugins";
 
 declare module "fastify" {
   interface InjectOptions {

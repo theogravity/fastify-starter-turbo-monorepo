@@ -1,6 +1,10 @@
-import ajvFormats from "ajv-formats";
+import type { Ajv } from "ajv";
+import { fullFormats } from "ajv-formats/dist/formats.js";
 
 export const ajvPlugins = [
-  // https://ajv.js.org/packages/ajv-formats.html
-  ajvFormats,
+  (ajv: Ajv) => {
+    for (const format in fullFormats) {
+      ajv.addFormat(format, fullFormats[format]);
+    }
+  },
 ];

@@ -1,14 +1,16 @@
+import { BACKEND_LOG_LEVEL, IS_PROD, IS_TEST } from "@/constants.js";
+import { asyncLocalStorage } from "@/utils/async-local-storage.js";
 import { PinoTransport } from "@loglayer/transport-pino";
 import { getPrettyTerminal } from "@loglayer/transport-pretty-terminal";
-import { type ILogLayer, LogLayer, type LogLayerTransport } from "loglayer";
+import { type ILogLayer, LogLayer, type LogLayerTransport, type PluginShouldSendToLoggerParams } from "loglayer";
 import { pino } from "pino";
 import { serializeError } from "serialize-error";
-import { BACKEND_LOG_LEVEL, IS_PROD, IS_TEST } from "../constants";
-import { asyncLocalStorage } from "./async-local-storage";
 
 declare module "fastify" {
   interface FastifyBaseLogger extends LogLayer {}
 }
+
+const ignoreLogs = ["request completed", "incoming request"];
 
 const transports: LogLayerTransport[] = [];
 
@@ -45,17 +47,13 @@ const logger = new LogLayer({
   copyMsgOnOnlyError: true,
   plugins: [
     {
-      onBeforeMessageOut: ({ messages }) => {
-        // Check for fastify request / response logs sent to the logger
-        // and remove them from the log output
-        // The first message is an object from fastify containing
-        // the request and response objects
-        // The second message is the actual log message
-        if (messages[0]?.res && messages[1]) {
-          return [messages[1]];
+      shouldSendToLogger(params: PluginShouldSendToLoggerParams): boolean {
+        if (params.messages?.[1] && ignoreLogs.some((log) => params.messages[1].includes(log))) {
+          // Ignore logs that match the ignore list
+          return false;
         }
 
-        return messages;
+        return true;
       },
     },
   ],

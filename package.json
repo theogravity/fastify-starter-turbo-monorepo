@@ -15,6 +15,9 @@
     "clean:workspaces": "turbo clean",
     "clean:node_modules": "find . -name \"node_modules\" -type d -prune -exec rm -rf '{}' +\n",
     "lint": "turbo run lint --continue --",
+    "biome:check": "biome check --no-errors-on-unmatched --files-ignore-unknown=true --write --unsafe",
+    "biome:format": "biome format --no-errors-on-unmatched --files-ignore-unknown=true --write",
+    "biome:lint": "biome lint --fix",
     "lint:packages": "pnpm run lint:packages:semver && pnpm run lint:packages:mismatches",
     "lint:packages:semver": "syncpack lint-semver-ranges",
     "lint:packages:mismatches": "syncpack list-mismatches",
@@ -42,7 +45,7 @@
   },
   "engineStrict": true,
   "engines": {
-    "node": ">=24.0.0"
+    "node": ">=22.0.0"
   },
-  "packageManager": "pnpm@9.11.0"
+  "packageManager": "pnpm@10.11.0"
 }

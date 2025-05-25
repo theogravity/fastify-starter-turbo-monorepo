@@ -1,7 +1,7 @@
 import type { DeleteResult, Kysely } from "kysely";
-import type { Database } from "../types";
-import type { New{{ properCase tableName }}, {{ properCase tableName }}Db, {{ properCase tableName }}Update } from "../types/{{ dashCase tableName }}s.db-types";
-import { BaseRepository } from "./base.repository";
+import type { Database } from "../types.js";
+import type { New{{ properCase tableName }}, {{ properCase tableName }}Db, {{ properCase tableName }}Update } from "../types/{{ dashCase tableName }}s.db-types.js";
+import { BaseRepository } from "./base.repository.js";
 
 export class {{ properCase tableName }}sRepository extends BaseRepository {
   async create{{ properCase tableName }}({

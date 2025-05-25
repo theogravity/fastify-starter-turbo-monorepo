@@ -1,7 +1,7 @@
+import { BaseRepository } from "@/db/repositories/base.repository.js";
+import type { Database } from "@/db/types/index.js";
+import type { NewUser, UserDb, UserUpdate } from "@/db/types/users.db-types.js";
 import type { DeleteResult, Kysely } from "kysely";
-import type { Database } from "../types";
-import type { NewUser, UserDb, UserUpdate } from "../types/users.db-types";
-import { BaseRepository } from "./base.repository";
 
 /**
  * Stores profile information for users.

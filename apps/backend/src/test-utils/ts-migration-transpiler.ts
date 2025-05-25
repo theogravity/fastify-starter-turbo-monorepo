@@ -1,7 +1,17 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { createJiti } from "jiti";
 import type { Migration, MigrationProvider } from "kysely";
 import ts from "ts-node";
+
+const moduleFileUrl = import.meta.url;
+
+// Create a jiti instance that can resolve path aliases
+const jitiInstance = createJiti(fileURLToPath(moduleFileUrl), {
+  interopDefault: true,
+  alias: { "@": fileURLToPath(new URL("./src", moduleFileUrl)) },
+});
 
 ts.register({
   transpileOnly: true,
@@ -20,7 +30,8 @@ export class TypeScriptFileMigrationProvider implements MigrationProvider {
       }
 
       const importPath = path.join(this.absolutePath, fileName).replaceAll("\\", "/");
-      const { up, down } = await import(importPath);
+      // Use jiti to resolve and import the migration file
+      const { up, down } = jitiInstance(importPath);
       const migrationKey = fileName.substring(0, fileName.lastIndexOf("."));
 
       migrations[migrationKey] = { up, down };

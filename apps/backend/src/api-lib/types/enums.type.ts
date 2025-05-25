@@ -1,5 +1,5 @@
+import { UserProviderType } from "@/db/types/user-providers.db-types.js";
 import { Type } from "@sinclair/typebox";
-import { UserProviderType } from "../../db/types/user-providers.db-types";
 
 // Don't use Type.Enum. You won't get proper typescript types in
 // the client generation or Swagger UI.

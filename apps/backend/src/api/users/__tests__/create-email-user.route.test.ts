@@ -1,8 +1,8 @@
+import { testFramework } from "@/test-utils/test-framework/index.js";
+import { testFastify } from "@/test-utils/test-server.js";
 import { faker } from "@faker-js/faker";
 import { describe, expect, it } from "vitest";
-import { testFramework } from "../../../test-utils/test-framework";
-import { testFastify } from "../../../test-utils/test-server";
-import type { CreateEMailUserResponse } from "../create-email-user.route";
+import type { CreateEMailUserResponse } from "../create-email-user.route.js";
 
 describe("Create e-mail user API", () => {
   it("should create an e-mail user", async () => {

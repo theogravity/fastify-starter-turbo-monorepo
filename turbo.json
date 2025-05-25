@@ -1,5 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
   "globalDependencies": [
     "**/.env.*local",
     "biome.json",
@@ -15,8 +16,14 @@
     },
     "verify-types": {},
     "lint": {},
+    "test:ci": {
+      "dependsOn": ["@internal/backend-errors#build:dev"],
+      "persistent": false,
+      "cache": false
+    },
     "test": {
       "dependsOn": ["@internal/backend-errors#build:dev"],
+      "interactive": true,
       "persistent": true,
       "cache": false
     },

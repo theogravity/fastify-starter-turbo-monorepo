@@ -4,8 +4,8 @@ import { fileURLToPath } from "node:url";
 import Fastify from "fastify";
 import fp from "fastify-plugin";
 import { stringify } from "yaml";
-import routes from "../src/api";
-import { ajvPlugins } from "../src/api-lib/ajv-plugins";
+import routes from "../src/api/index.js";
+import { ajvPlugins } from "../src/api-lib/ajv-plugins.js";
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory

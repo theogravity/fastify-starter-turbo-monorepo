@@ -1,7 +1,7 @@
+import { UserProviderTypeSchema } from "@/api-lib/types/enums.type.js";
+import { UserProviderSchema } from "@/api-lib/types/user-provider.type.js";
+import { UserSchema } from "@/api-lib/types/user.type.js";
 import type { FastifyInstance } from "fastify";
-import { UserProviderTypeSchema } from "./enums.type";
-import { UserProviderSchema } from "./user-provider.type";
-import { UserSchema } from "./user.type";
 
 export async function apiTypes(fastify: FastifyInstance) {
   fastify.addSchema(UserProviderTypeSchema);

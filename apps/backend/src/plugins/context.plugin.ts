@@ -1,9 +1,9 @@
+import { ApiContext } from "@/api-lib/context.js";
+import { db } from "@/db/index.js";
+import { removeQueryParametersFromPath } from "@/utils/remove-query-params.js";
 import type { FastifyInstance } from "fastify";
 import fp from "fastify-plugin";
 import type { LogLayer } from "loglayer";
-import { ApiContext } from "../api-lib/context";
-import { db } from "../db";
-import { removeQueryParametersFromPath } from "../utils/remove-query-params";
 
 declare module "fastify" {
   interface FastifyRequest {

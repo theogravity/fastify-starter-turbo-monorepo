@@ -1,14 +1,14 @@
+import { ajvPlugins } from "@/api-lib/ajv-plugins.js";
+import { errorHandler } from "@/api-lib/error-handler.js";
+import routes from "@/api/index.js";
+import { plugins } from "@/plugins/index.js";
+import { asyncLocalStorage } from "@/utils/async-local-storage.js";
+import { getLogger } from "@/utils/logger.js";
 import fastifyCors from "@fastify/cors";
 import { type TypeBoxTypeProvider, TypeBoxValidatorCompiler } from "@fastify/type-provider-typebox";
 import Fastify from "fastify";
 import fp from "fastify-plugin";
 import { nanoid } from "nanoid";
-import routes from "./api";
-import { ajvPlugins } from "./api-lib/ajv-plugins";
-import { errorHandler } from "./api-lib/error-handler";
-import { plugins } from "./plugins";
-import { asyncLocalStorage } from "./utils/async-local-storage";
-import { getLogger } from "./utils/logger";
 
 export async function startServer({
   port,

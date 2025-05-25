@@ -1,5 +1,5 @@
 import { type Static, Type } from "@sinclair/typebox";
-import { TypeRef } from "@/types";
+import { TypeRef } from "@/types.js";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 {{#ifEquals methodType "GET" }}{{set "responseCode" 200 }}{{/ifEquals}}{{#ifEquals methodType "POST" }}{{set "responseCode" 200 }}{{/ifEquals}}{{#ifEquals methodType "PUT" }}{{set "responseCode" 201 }}{{/ifEquals}}{{#ifEquals methodType "DELETE" }}{{set "responseCode" 204 }}{{/ifEquals}}
 const {{ properCase operationName }}RequestSchema = Type.Object(

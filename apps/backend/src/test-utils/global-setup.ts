@@ -1,10 +1,11 @@
 import * as path from "node:path";
+import { TypeScriptFileMigrationProvider } from "@/test-utils/ts-migration-transpiler.js";
 import { PostgreSqlContainer } from "@testcontainers/postgresql";
 import { Kysely, Migrator, PostgresDialect } from "kysely";
 import { Pool } from "pg";
-import { TypeScriptFileMigrationProvider } from "./ts-migration-transpiler";
 
 global.containers = [];
+global.dbPool = null;
 
 export async function setup(_config: any) {
   console.log("Setting up global environment");
@@ -24,15 +25,19 @@ async function initializePostgres() {
   process.env.DB_PASS = postgresContainer.getPassword();
   process.env.DB_NAME = postgresContainer.getDatabase();
 
+  const pool = new Pool({
+    host: "localhost",
+    port: postgresContainer.getPort(),
+    user: postgresContainer.getUsername(),
+    password: postgresContainer.getPassword(),
+    database: postgresContainer.getDatabase(),
+  });
+
+  global.dbPool = pool;
+
   const db = new Kysely({
     dialect: new PostgresDialect({
-      pool: new Pool({
-        host: "localhost",
-        port: postgresContainer.getPort(),
-        user: postgresContainer.getUsername(),
-        password: postgresContainer.getPassword(),
-        database: postgresContainer.getDatabase(),
-      }),
+      pool,
     }),
   });
 

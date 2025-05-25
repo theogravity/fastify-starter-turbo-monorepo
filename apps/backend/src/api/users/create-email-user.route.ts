@@ -1,9 +1,9 @@
+import { UserProviderSchema } from "@/api-lib/types/user-provider.type.js";
+import { UserSchema } from "@/api-lib/types/user.type.js";
+import { UserProviderType } from "@/db/types/user-providers.db-types.js";
+import { TypeRef } from "@/types.js";
 import { type Static, Type } from "@sinclair/typebox";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { UserProviderSchema } from "../../api-lib/types/user-provider.type";
-import { UserSchema } from "../../api-lib/types/user.type";
-import { UserProviderType } from "../../db/types/user-providers.db-types";
-import { TypeRef } from "../../types";
 
 const CreateEMailUserRequestSchema = Type.Object(
   {

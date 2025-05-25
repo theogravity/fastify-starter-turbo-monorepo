@@ -1,6 +1,6 @@
 // Do not remove this comment: database-table-import
-import type { UserProvidersRepository } from "./user-providers.repository";
-import type { UsersRepository } from "./users.repository";
+import type { UserProvidersRepository } from "@/db/repositories/user-providers.repository.js";
+import type { UsersRepository } from "@/db/repositories/users.repository.js";
 
 export interface Repositories {
   // Do not remove this comment: database-table-repository

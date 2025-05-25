@@ -1,10 +1,13 @@
 {
-  "compilerOptions": {
-    "outDir": "./dist"
-  },
   "extends": "@internal/tsconfig/tsconfig.json",
-  "include": ["./src/**/*"],
-  "paths": {
-    "@/*": ["/src/*"]
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "NodeNext",
+    "moduleResolution": "node16",
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"]
+    }
   }
 }

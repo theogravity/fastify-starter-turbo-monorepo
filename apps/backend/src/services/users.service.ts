@@ -1,7 +1,7 @@
+import { PasswordAlgo, UserProviderType } from "@/db/types/user-providers.db-types.js";
+import type { NewUser, UserDb } from "@/db/types/users.db-types.js";
+import { BaseService } from "@/services/base.service.js";
 import bcrypt from "bcrypt";
-import { PasswordAlgo, UserProviderType } from "../db/types/user-providers.db-types";
-import type { NewUser, UserDb } from "../db/types/users.db-types";
-import { BaseService } from "./base.service";
 
 export class UsersService extends BaseService {
   async createEMailUser({
