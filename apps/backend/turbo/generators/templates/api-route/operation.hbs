@@ -1,4 +1,5 @@
 import { type Static, Type } from "@sinclair/typebox";
+import { TypeRef } from "@/types";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 {{#ifEquals methodType "GET" }}{{set "responseCode" 200 }}{{/ifEquals}}{{#ifEquals methodType "POST" }}{{set "responseCode" 200 }}{{/ifEquals}}{{#ifEquals methodType "PUT" }}{{set "responseCode" 201 }}{{/ifEquals}}{{#ifEquals methodType "DELETE" }}{{set "responseCode" 204 }}{{/ifEquals}}
 const {{ properCase operationName }}RequestSchema = Type.Object(
@@ -32,9 +33,9 @@ export async function {{ operationName }}Route(fastify: FastifyInstance) {
       operationId: "{{ operationName }}",
       tags: ["{{ routeResource }}"],
       description: "Add your route description here",
-      body: Type.Ref({{ properCase operationName }}RequestSchema),
+      body: TypeRef({{ properCase operationName }}RequestSchema),
       response: {
-        "{{ responseCode }}": Type.Ref({{ properCase operationName }}ResponseSchema),
+        "{{ responseCode }}": TypeRef({{ properCase operationName }}ResponseSchema),
       },
     },
   }

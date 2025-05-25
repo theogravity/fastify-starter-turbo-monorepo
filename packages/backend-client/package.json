@@ -21,11 +21,11 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@hey-api/openapi-ts": "0.64.12",
-    "@hey-api/client-fetch": "0.8.3",
+    "@hey-api/openapi-ts": "0.67.6",
+    "@hey-api/client-fetch": "0.10.1",
     "@internal/tsconfig": "workspace:*",
     "@internal/backend": "workspace:*",
     "hash-runner": "2.0.1",
-    "tsup": "8.4.0"
+    "tsup": "8.5.0"
   }
 }

@@ -1,10 +1,10 @@
 import { PinoTransport } from "@loglayer/transport-pino";
+import { getPrettyTerminal } from "@loglayer/transport-pretty-terminal";
 import { type ILogLayer, LogLayer, type LogLayerTransport } from "loglayer";
 import { pino } from "pino";
 import { serializeError } from "serialize-error";
 import { BACKEND_LOG_LEVEL, IS_PROD, IS_TEST } from "../constants";
 import { asyncLocalStorage } from "./async-local-storage";
-import { getPrettyTerminal } from "@loglayer/transport-pretty-terminal";
 
 declare module "fastify" {
   interface FastifyBaseLogger extends LogLayer {}

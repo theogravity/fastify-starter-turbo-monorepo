@@ -3,5 +3,8 @@
     "outDir": "./dist"
   },
   "extends": "@internal/tsconfig/tsconfig.json",
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "paths": {
+    "@/*": ["/src/*"]
+  }
 }

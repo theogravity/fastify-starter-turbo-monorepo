@@ -3,6 +3,7 @@ import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { UserProviderSchema } from "../../api-lib/types/user-provider.type";
 import { UserSchema } from "../../api-lib/types/user.type";
 import { UserProviderType } from "../../db/types/user-providers.db-types";
+import { TypeRef } from "../../types";
 
 const CreateEMailUserRequestSchema = Type.Object(
   {
@@ -31,8 +32,8 @@ export type CreateEMailUserRequest = Static<typeof CreateEMailUserRequestSchema>
 
 const CreateEMailUserResponseSchema = Type.Object(
   {
-    user: Type.Ref(UserSchema),
-    provider: Type.Ref(UserProviderSchema),
+    user: TypeRef(UserSchema),
+    provider: TypeRef(UserProviderSchema),
   },
   { $id: "CreateEMailUserResponse" },
 );
