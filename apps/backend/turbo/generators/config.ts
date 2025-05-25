@@ -1,11 +1,13 @@
 import type { PlopTypes } from "@turbo/gen";
 import { apiRouteGenerator } from "./actions/api-route.generator";
 import { databaseTableGenerator } from "./actions/database-table.generator";
+import { serviceGenerator } from "./actions/service.generator";
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   helpers(plop);
   apiRouteGenerator(plop);
   databaseTableGenerator(plop);
+  serviceGenerator(plop);
 }
 
 function helpers(plop: PlopTypes.NodePlopAPI) {

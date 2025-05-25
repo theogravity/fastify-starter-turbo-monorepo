@@ -4,6 +4,7 @@ import { UserProvidersRepository } from "@/db/repositories/user-providers.reposi
 import { UsersRepository } from "@/db/repositories/users.repository.js";
 import type { Database } from "@/db/types/index.js";
 import type { Services } from "@/services/index.js";
+// Do not remove this comment: service-import
 import { UsersService } from "@/services/users.service.js";
 import { getLogger } from "@/utils/logger.js";
 import type { Kysely } from "kysely";
@@ -40,6 +41,7 @@ export class ApiContext {
     };
 
     this.services = {
+      // Do not remove this comment: service-init
       users: new UsersService(serviceParams),
     };
 
