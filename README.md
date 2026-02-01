@@ -1,4 +1,4 @@
-# Fastify Turbo Monorepo Starter
+# Bun Fastify Turbo Monorepo Starter
 
 A starter project for building an API server using **Bun**, Typescript, Fastify v5, and Kysely with Postgres.
 
