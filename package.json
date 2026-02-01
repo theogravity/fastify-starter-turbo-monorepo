@@ -12,6 +12,7 @@
     "db:migrate:latest": "cd apps/backend && pnpm run db:migrate:latest",
     "db:migrate:undo": "cd apps/backend && pnpm run db:migrate:undo",
     "clean:repo": "git add --all && git reset --hard",
+    "clean": "pnpm run clean:node_modules && pnpm run clean:turbo && pnpm run clean:dist && pnpm run clean:hash-runner",
     "clean:workspaces": "turbo clean",
     "clean:node_modules": "find . -name \"node_modules\" -type d -prune -exec rm -rf '{}' +\n",
     "clean:turbo": "find . -name \".turbo\" -type d -prune -exec rm -rf '{}' +\n",
