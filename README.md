@@ -1,24 +1,30 @@
 # Fastify Turbo Monorepo Starter
 
-This is a starter project for building an API server using Typescript, Fastify v5 and Kysely with Postgres. 
+A starter project for building an API server using **Bun**, Typescript, Fastify v5, and Kysely with Postgres.
+
+> **This project uses [Bun](https://bun.sh/) as its runtime and package manager.** Bun provides faster installs, native TypeScript execution, and improved performance over Node.js.
+
+## Requirements
+
+- [Bun](https://bun.sh/) >= 1.0.0
+- [Docker](https://docs.docker.com/engine/install/) (for local Postgres and testing)
 
 ## Features
 
+- **Bun-powered** - Uses Bun for package management, script execution, and runtime.
 - Fastify v5 with Typescript.
-- It is setup as a monorepo using [`turbo`](https://turbo.build/) and [`pnpm`](https://pnpm.io/).
+- Monorepo setup using [`turbo`](https://turbo.build/) and [Bun workspaces](https://bun.sh/docs/install/workspaces).
 - Outputs OpenAPI schema for the API and has a web UI for viewing it.
 - A sample REST test is included using Vitest.
 - Sample database migrations / repositories are included using Kysely.
 - An client SDK package is included to generate typescript client code from the API schema.
 - An error handler package is included to handle errors and return a consistent response.
 - Code generators using `turbo gen` to create new API endpoints and database tables.
-- Publish packages to npm and generate changelogs and releases using [`changesets`](https://github.com/changesets/changesets).
 
 ## Libraries and tools used
 
 - [`typescript`](https://www.typescriptlang.org/)
-- [`pnpm`](https://pnpm.io/) for package management
-- [`changesets`](https://github.com/changesets/changesets) for version and changelogs
+- [`bun`](https://bun.sh/) for package management and runtime
 - [`commitlint`](https://commitlint.js.org/) for commit message linting
 - [`turbo`](https://turbo.build/) for monorepo management
 - [`fastify`](https://www.fastify.io/) for the API server framework
@@ -34,11 +40,17 @@ This is a starter project for building an API server using Typescript, Fastify v
 
 ## Setup
 
-- [Install docker](https://docs.docker.com/engine/install/)
-- [Install pnpm](https://pnpm.io/installation)
-- `pnpm install turbo --global`
-- `pnpm install`
-- Copy `apps/backend/.env.example` to `apps/backend/.env`
+1. Install Bun (if not already installed):
+   ```bash
+   curl -fsSL https://bun.sh/install | bash
+   ```
+
+2. Install dependencies:
+   ```bash
+   bun install
+   ```
+
+3. Copy `apps/backend/.env.example` to `apps/backend/.env`
 
 Start local postgres server:
 
@@ -46,15 +58,7 @@ Start local postgres server:
 
 Perform database migrations:
 
-`pnpm db:migrate:lastest`
-
-In Github settings (to publish packages and changelogs):
-- Edit `.changeset/config.json` to your repository
-- `Code and Automation > Actions > Workflow permissions`
-    * `Read and write permissions`
-    * `Allow Github Actions to create and approve pull requests`
-- `Secrets and variables > Actions`
-    * `Repository Secrets > Actions > create NPM_TOKEN > your npm publish token`
+`bun run db:migrate:latest`
 
 ## Development
 
@@ -86,24 +90,13 @@ Generators for the following:
 
 ## Database migrations
 
-- Create a migration: `pnpm db:create`
-- Run migrations: `pnpm db:latest`
-- Rollback migrations: `pnpm db:undo`
+- Create a migration: `bun run db:migrate:create`
+- Run migrations: `bun run db:migrate:latest`
+- Rollback migrations: `bun run db:migrate:undo`
 
 ## Update all dependencies
 
-`pnpm syncpack:update`
-
-## Development workflow / Add a new CHANGELOG.md entry + package versioning
-
-- Create a branch and make changes.
-- Create a new changeset entry: `pnpm changeset`
-- Commit your changes and create a pull request.
-- Merge the pull request 
-- A new PR will be created with the changeset entry/ies.
-- When the PR is merged, the package versions will be bumped and published and the changelog updated.
-
-**note: To publish a package, `private: false` must be set in the package.json**
+`bun run syncpack:update`
 
 ## Troubleshooting
 
