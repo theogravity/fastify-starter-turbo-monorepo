@@ -3,29 +3,28 @@
   "description": "Client to call backend.",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "main": "dist/index.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": "./dist/index.js"
     }
   },
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "pnpm run generate:yaml-file && pnpm run build:client",
-    "build:client": "openapi-ts && tsup src/index.ts",
+    "build:client": "openapi-ts && tsdown",
     "build:dev": "pnpm run generate:yaml-file && hash-runner",
     "generate:yaml-file": "cd ../../apps/backend && pnpm run generate",
     "clean": "rm -rf .turbo node_modules dist",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@hey-api/openapi-ts": "0.67.6",
-    "@hey-api/client-fetch": "0.10.1",
+    "@hey-api/openapi-ts": "0.91.1",
     "@internal/tsconfig": "workspace:*",
     "@internal/backend": "workspace:*",
-    "hash-runner": "2.0.1",
-    "tsup": "8.5.0"
+    "hash-runner": "4.0.0",
+    "tsdown": "0.12.5"
   }
 }
