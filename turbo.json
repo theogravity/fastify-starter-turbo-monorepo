@@ -1,57 +1,30 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "stream",
-  "globalDependencies": [
-    "**/.env.*local",
-    "biome.json",
-    "packages/tsconfig/**"
-  ],
   "tasks": {
-    "build:dev": {
+    "clean": {
       "cache": false
     },
     "build": {
-      "dependsOn": ["lint", "^build"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+      "dependsOn": ["^build"]
     },
-    "verify-types": {},
-    "lint": {},
-    "test:ci": {
-      "dependsOn": ["@internal/backend-errors#build:dev"],
-      "persistent": false,
+    "build:dev": {
       "cache": false
-    },
-    "test": {
-      "dependsOn": ["@internal/backend-errors#build:dev"],
-      "interactive": true,
-      "persistent": true,
-      "cache": false
-    },
-    "build:backend": {
-      "dependsOn": ["@internal/backend#lint","@internal/backend#build:dev"],
-      "cache": true,
-      "inputs": ["apps/backend-api/**", "!apps/backend-api/dist/**"],
-      "outputs": [
-        "apps/backend/dist/**"
-      ]
-    },
-    "generate:sdk": {
-      "dependsOn": [
-        "@internal/backend-client#build:dev"
-      ],
-      "cache": true
     },
     "dev": {
-      "dependsOn": ["build:dev"],
-      "cache": false,
+      "cache": false
+    },
+    "lint": {},
+    "lint:staged": {
+      "cache": true
+    },
+    "test": {
+      "cache": false
+    },
+    "verify-types": {},
+    "prod": {
       "persistent": true
     },
-    "prod": {
-      "dependsOn": ["build"],
-      "persistent": true,
-      "cache": true,
-      "inputs": ["$TURBO_DEFAULT$"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
-    }
+    "generate": {}
   }
 }
