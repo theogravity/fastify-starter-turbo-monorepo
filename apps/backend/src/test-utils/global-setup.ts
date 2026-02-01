@@ -1,8 +1,8 @@
 import * as path from "node:path";
-import { TypeScriptFileMigrationProvider } from "@/test-utils/ts-migration-transpiler.js";
 import { PostgreSqlContainer } from "@testcontainers/postgresql";
 import { Kysely, Migrator, PostgresDialect } from "kysely";
 import { Pool } from "pg";
+import { TypeScriptFileMigrationProvider } from "@/test-utils/ts-migration-transpiler.js";
 
 global.containers = [];
 global.dbPool = null;
@@ -18,7 +18,7 @@ export async function setup(_config: any) {
 
 async function initializePostgres() {
   console.log("Starting postgres container");
-  const postgresContainer = await new PostgreSqlContainer().start();
+  const postgresContainer = await new PostgreSqlContainer("postgres:16").start();
 
   process.env.DB_PORT = postgresContainer.getPort().toString();
   process.env.DB_USER = postgresContainer.getUsername();
