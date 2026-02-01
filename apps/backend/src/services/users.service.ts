@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { PasswordAlgo, UserProviderType } from "@/db/types/user-providers.db-types.js";
 import type { NewUser, UserDb } from "@/db/types/users.db-types.js";
 import { BaseService } from "@/services/base.service.js";
@@ -13,7 +13,7 @@ export class UsersService extends BaseService {
     email: string;
     password: string;
   }): Promise<UserDb> {
-    const pass = bcrypt.hash(password, 12);
+    const pass = await bcrypt.hash(password, 12);
 
     let u;
 
