@@ -6,7 +6,6 @@ ignoredBuiltDependencies:
   - ssh2
 
 onlyBuiltDependencies:
-  - bcrypt
   - better-sqlite3
   - core-js-pure
   - cpu-features
