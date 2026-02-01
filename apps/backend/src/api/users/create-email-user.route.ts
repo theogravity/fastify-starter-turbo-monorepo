@@ -1,5 +1,5 @@
-import { type Static, Type } from "@sinclair/typebox";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { type Static, Type } from "typebox";
 import { UserSchema } from "@/api-lib/types/user.type.js";
 import { UserProviderSchema } from "@/api-lib/types/user-provider.type.js";
 import { UserProviderType } from "@/db/types/user-providers.db-types.js";
@@ -51,9 +51,9 @@ export async function createEMailUserRoute(fastify: FastifyInstance) {
         operationId: "createEMailUser",
         tags: ["user"],
         description: "Create an e-mail-based account",
-        body: Type.Ref(CreateEMailUserRequestSchema),
+        body: Type.Ref("CreateEMailUserRequest"),
         response: {
-          "200": Type.Ref(CreateEMailUserResponseSchema),
+          "200": Type.Ref("CreateEMailUserResponse"),
         },
       },
     },

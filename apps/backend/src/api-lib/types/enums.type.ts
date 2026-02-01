@@ -1,4 +1,4 @@
-import { Type } from "@sinclair/typebox";
+import { Type } from "typebox";
 import { UserProviderType } from "@/db/types/user-providers.db-types.js";
 
 // Don't use Type.Enum. You won't get proper typescript types in

@@ -68,9 +68,6 @@ importers:
       '@loglayer/transport-simple-pretty-terminal':
         specifier: 2.3.1
         version: 2.3.1
-      '@sinclair/typebox':
-        specifier: 0.34.48
-        version: 0.34.48
       ajv:
         specifier: 8.17.1
         version: 8.17.1
@@ -113,6 +110,9 @@ importers:
       serialize-error:
         specifier: 13.0.1
         version: 13.0.1
+      typebox:
+        specifier: 1.0.80
+        version: 1.0.80
       uuid:
         specifier: 13.0.0
         version: 13.0.0
@@ -144,9 +144,6 @@ importers:
       kysely-ctl:
         specifier: 0.20.0
         version: 0.20.0(kysely@0.28.11)(typescript@5.9.3)
-      ts-node:
-        specifier: 10.9.2
-        version: 10.9.2(@types/node@25.1.0)(typescript@5.9.3)
       tsc-alias:
         specifier: 1.8.16
         version: 1.8.16
@@ -1206,9 +1203,6 @@ packages:
     resolution: {integrity: sha512-mxRFDdHIWRxg3UfIIAwCm6NzvxG0jDX/wBN6KsQFTvKFqqg9vTrWUE68qEjHt19A5wwx5X5aUi2zuZT7YR0jrA==}
     cpu: [x64]
     os: [win32]
-
-  '@sinclair/typebox@0.34.48':
-    resolution: {integrity: sha512-kKJTNuK3AQOrgjjotVxMrCn1sUJwM76wMszfq1kdU4uYVJjvEWuFQ6HgvLt4Xz3fSmZlTOxJ/Ie13KnIcWQXFA==}
 
   '@sindresorhus/merge-streams@2.3.0':
     resolution: {integrity: sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==}
@@ -4907,8 +4901,6 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.57.1':
     optional: true
-
-  '@sinclair/typebox@0.34.48': {}
 
   '@sindresorhus/merge-streams@2.3.0': {}
 

@@ -1,4 +1,4 @@
-import { type Static, Type } from "@sinclair/typebox";
+import { type Static, Type } from "typebox";
 import { UserProviderTypeSchema } from "@/api-lib/types/enums.type.js";
 
 export const UserProviderSchema = Type.Object(

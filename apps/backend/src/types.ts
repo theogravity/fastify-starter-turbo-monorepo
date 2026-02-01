@@ -1,4 +1,4 @@
-import { type Static, type TSchema, Type } from "@sinclair/typebox";
+import { type Static, type TSchema, Type } from "typebox";
 
-// biome-ignore lint/style/noNonNullAssertion: this is valid
-export const TypeRef = <T extends TSchema>(schema: T) => Type.Unsafe<Static<T>>(Type.Ref(schema.$id!));
+export const TypeRef = <T extends TSchema>(schema: T) =>
+  Type.Unsafe<Static<T>>(Type.Ref((schema as { $id?: string }).$id as string));
