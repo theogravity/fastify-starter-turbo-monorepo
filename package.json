@@ -22,7 +22,6 @@
     "lint:packages:semver": "syncpack lint-semver-ranges",
     "lint:packages:mismatches": "syncpack list-mismatches",
     "publish-packages": "turbo run build && changeset version && changeset publish",
-    "typecheck": "turbo run typecheck --continue --",
     "syncpack:update": "syncpack update && syncpack fix-mismatches && pnpm i",
     "syncpack:format": "syncpack format",
     "syncpack:lint": "syncpack lint",

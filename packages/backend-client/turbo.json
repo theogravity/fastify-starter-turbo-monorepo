@@ -17,7 +17,7 @@
       "inputs": ["*.json", "openapi.yml"],
       "outputs": ["src/generated/**"]
     },
-    "typecheck": {
+    "verify-types": {
       "inputs": ["*.ts", "*.json", "src/**"]
     }
   }

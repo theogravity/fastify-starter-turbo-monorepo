@@ -18,7 +18,7 @@
     "build:dev": "pnpm run generate:yaml-file && hash-runner",
     "generate:yaml-file": "cd ../../apps/backend && pnpm run generate",
     "clean": "rm -rf .turbo node_modules dist",
-    "typecheck": "tsc --noEmit"
+    "verify-types": "tsc --noEmit"
   },
   "devDependencies": {
     "@hey-api/openapi-ts": "0.91.1",
