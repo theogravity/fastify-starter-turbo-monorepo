@@ -3,34 +3,34 @@
   "description": "Error emission and handling for the backend",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "main": "dist/index.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": "./dist/index.js"
     }
   },
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsup src/index.ts",
+    "build": "tsdown",
     "build:dev": "hash-runner",
     "clean": "rm -rf .turbo node_modules dist",
     "lint": "biome check --write --unsafe src && biome format src --write && biome lint src --fix",
     "verify-types": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
-    "clean-stack": "5.2.0",
-    "nanoid": "5.1.5",
-    "serialize-error": "12.0.0",
+    "clean-stack": "6.0.0",
+    "nanoid": "5.1.6",
+    "serialize-error": "13.0.1",
     "sprintf-js": "1.1.3"
   },
   "devDependencies": {
     "@types/sprintf-js": "1.1.4",
     "@internal/tsconfig": "workspace:*",
     "ajv": "8.17.1",
-    "hash-runner": "2.0.1",
-    "tsup": "8.5.0"
+    "hash-runner": "4.0.0",
+    "tsdown": "0.12.5"
   },
   "peerDependencies": {
     "ajv": "8.17.1"

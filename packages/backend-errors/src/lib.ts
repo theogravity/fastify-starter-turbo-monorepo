@@ -155,7 +155,7 @@ export class ApiError extends Error {
     } else if (this.causedBy) {
       try {
         causedBy = JSON.stringify(this.causedBy);
-      } catch (e) {
+      } catch (_e) {
         causedBy = this.causedBy;
       }
     }
