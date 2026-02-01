@@ -6,9 +6,7 @@
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "start": "turbo watch dev",
-    "add-changeset": "changeset add",
     "build": "turbo run build",
-    "changeset": "changeset",
     "db:migrate:create": "cd apps/backend && bun run db:migrate:create",
     "db:migrate:latest": "cd apps/backend && bun run db:migrate:latest",
     "db:migrate:undo": "cd apps/backend && bun run db:migrate:undo",
@@ -19,18 +17,13 @@
     "clean:turbo": "find . -name \".turbo\" -type d -prune -exec rm -rf '{}' +\n",
     "clean:dist": "find . -name \"dist\" -type d -prune -exec rm -rf '{}' +\n",
     "clean:hash-runner": "find . -name \".hashes.json\" -type f -delete\n",
-    "publish-packages": "turbo run build && changeset version && changeset publish",
     "syncpack:update": "syncpack update && syncpack fix-mismatches && bun install",
     "syncpack:format": "syncpack format",
     "syncpack:lint": "syncpack lint",
-    "release": "changeset publish",
-    "version-packages": "changeset version",
     "verify-types": "turbo run verify-types --continue --"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.13",
-    "@changesets/changelog-github": "0.5.2",
-    "@changesets/cli": "2.29.8",
     "@commitlint/cli": "20.4.0",
     "@commitlint/config-conventional": "20.4.0",
     "@internal/tsconfig": "workspace:*",
