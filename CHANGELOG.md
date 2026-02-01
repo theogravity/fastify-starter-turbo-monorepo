@@ -1,5 +1,24 @@
 # fastify-starter-turbo-monorepo
 
+## Jan-31-2026
+
+- **Breaking:** Migrate from pnpm to Bun workspaces
+- **Breaking:** Update engine requirement to Bun
+- **Breaking:** Update Node baseline to 24
+- Replace bcrypt with bcryptjs for Bun compatibility
+- Update scripts to use Bun for TypeScript execution
+- Remove tsx dependency (replaced by Bun)
+- Add Bun compile script with bytecode generation
+- Remove package publishing capability
+- Upgrade `@sinclair/typebox` from 0.34.48 to 1.0.80
+- Remove ts-node in favor of jiti
+- Add dedicated `turbo.json` for each package and app
+- Simplify root `turbo.json` to base task definitions
+- Update lefthook config and add `lint:staged` scripts
+- Add clean scripts (`clean`, `clean:turbo`, `clean:dist`, `clean:hash-runner`)
+- Replace pino with loglayer simple-pretty-terminal
+- Package updates
+
 ## Mar-16-2025
 
 - Remove husky in favor of lefthook
