@@ -1,3 +1,5 @@
+import type { Kysely } from "kysely";
+import type { ILogLayer } from "loglayer";
 import { db } from "@/db/index.js";
 // Do not remove this comment: repository-import
 import { UserProvidersRepository } from "@/db/repositories/user-providers.repository.js";
@@ -7,8 +9,6 @@ import type { Services } from "@/services/index.js";
 // Do not remove this comment: service-import
 import { UsersService } from "@/services/users.service.js";
 import { getLogger } from "@/utils/logger.js";
-import type { Kysely } from "kysely";
-import type { ILogLayer } from "loglayer";
 
 export type ApiContextParams = {
   db: Kysely<Database>;

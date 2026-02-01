@@ -8,7 +8,7 @@ async function plugin(fastify: FastifyInstance, _opts) {
     // Items marked test- are not part of our normal headers, and is used
     // purely for mocking purposes.
 
-    // @ts-ignore
+    // @ts-expect-error
     request.userId = request.headers["test-user-id"];
   });
 }

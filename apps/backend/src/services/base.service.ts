@@ -1,8 +1,8 @@
+import type { Kysely } from "kysely";
+import type { ILogLayer } from "loglayer";
 import type { Repositories } from "@/db/repositories/index.js";
 import type { Database } from "@/db/types/index.js";
 import type { Services } from "@/services/index.js";
-import type { Kysely } from "kysely";
-import type { ILogLayer } from "loglayer";
 
 export interface CommonServiceParams {
   log: ILogLayer;

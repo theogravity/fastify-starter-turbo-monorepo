@@ -1,5 +1,5 @@
-import { createEMailUserRoute } from "@/api/users/create-email-user.route.js";
 import type { FastifyInstance } from "fastify";
+import { createEMailUserRoute } from "@/api/users/create-email-user.route.js";
 
 // Do not remove this comment: route-imports
 

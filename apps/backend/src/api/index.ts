@@ -1,16 +1,16 @@
-import { apiTypes } from "@/api-lib/types/index.js";
-import { registerResourceRoutes } from "@/api/routes.js";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import type { FastifyInstance } from "fastify";
 import fp from "fastify-plugin";
+import { registerResourceRoutes } from "@/api/routes.js";
+import { apiTypes } from "@/api-lib/types/index.js";
 
 export default async function routes(fastify: FastifyInstance, _opts) {
   fastify.register(fastifySwagger, {
     mode: "dynamic",
     refResolver: {
       // This assigns the component name in the OpenAPI generated schema
-      buildLocalReference(json, baseUri, fragment, i) {
+      buildLocalReference(json, _baseUri, _fragment, i) {
         // Fallback if no title is present
         if (!json.title && json.$id) {
           json.title = json.$id;
@@ -48,8 +48,8 @@ export default async function routes(fastify: FastifyInstance, _opts) {
     },
     staticCSP: true,
     transformStaticCSP: (header) => header,
-    transformSpecification: (swaggerObject, req, reply) => {
-      // @ts-ignore
+    transformSpecification: (swaggerObject, req, _reply) => {
+      // @ts-expect-error
       swaggerObject.host = req.hostname;
       return swaggerObject;
     },

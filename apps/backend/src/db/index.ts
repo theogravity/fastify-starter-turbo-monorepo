@@ -1,7 +1,7 @@
-import { DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER } from "@/constants.js";
-import type { Database } from "@/db/types/index.js";
 import { CamelCasePlugin, Kysely, PostgresDialect } from "kysely";
 import pg from "pg";
+import { DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER } from "@/constants.js";
+import type { Database } from "@/db/types/index.js";
 
 export const kyselyDialect = new PostgresDialect({
   pool: new pg.Pool({

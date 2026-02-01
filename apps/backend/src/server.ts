@@ -1,24 +1,20 @@
-import { ajvPlugins } from "@/api-lib/ajv-plugins.js";
-import { errorHandler } from "@/api-lib/error-handler.js";
-import routes from "@/api/index.js";
-import { plugins } from "@/plugins/index.js";
-import { asyncLocalStorage } from "@/utils/async-local-storage.js";
-import { getLogger } from "@/utils/logger.js";
 import fastifyCors from "@fastify/cors";
 import { type TypeBoxTypeProvider, TypeBoxValidatorCompiler } from "@fastify/type-provider-typebox";
 import Fastify from "fastify";
 import fp from "fastify-plugin";
 import { nanoid } from "nanoid";
+import routes from "@/api/index.js";
+import { ajvPlugins } from "@/api-lib/ajv-plugins.js";
+import { errorHandler } from "@/api-lib/error-handler.js";
+import { plugins } from "@/plugins/index.js";
+import { asyncLocalStorage } from "@/utils/async-local-storage.js";
+import { getLogger } from "@/utils/logger.js";
 
-export async function startServer({
-  port,
-}: {
-  port: number;
-}) {
+export async function startServer({ port }: { port: number }) {
   const logger = getLogger();
 
   const fastify = Fastify({
-    // @ts-ignore
+    // @ts-expect-error
     loggerInstance: logger,
     disableRequestLogging: true,
     ajv: {
@@ -41,7 +37,7 @@ export async function startServer({
 
   // Function to validate CORS origin
   const corsOptions = {
-    origin: (origin, cb) => {
+    origin: (_origin, cb) => {
       // @todo - Add logic to validate origin this is a secuity risk
       return cb(null, true);
     },
