@@ -1,5 +1,7 @@
 {
-  "include": ["src/**", "package.json"],
+  "inputs": {
+    "includes": ["src/**", "package.json"]
+  },
   "execOnChange": "pnpm run build",
   "hashFile": ".hashes.json"
 }

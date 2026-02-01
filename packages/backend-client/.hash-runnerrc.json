@@ -1,5 +1,7 @@
 {
-  "include": ["openapi.yml", "package.json"],
+  "inputs": {
+    "includes": ["openapi.yml", "package.json"]
+  },
   "execOnChange": "pnpm run build",
   "hashFile": ".hashes.json"
 }
