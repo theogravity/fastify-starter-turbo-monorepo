@@ -10,11 +10,11 @@ components:
       bearerFormat: JWT
   schemas:
     UserProviderType:
+      type: string
       enum:
         - EMail
       title: Auth provider type
       description: The type of the auth provider
-      type: string
     User:
       type: object
       required:
@@ -23,15 +23,15 @@ components:
         - familyName
       properties:
         id:
+          type: string
           description: ID of the user
           format: uuid
-          type: string
         givenName:
+          type: string
           description: Given name of the user
-          type: string
         familyName:
-          description: Family name of the user
           type: string
+          description: Family name of the user
       title: User
     UserProvider:
       type: object
@@ -41,18 +41,18 @@ components:
         - accountId
       properties:
         userId:
+          type: string
           description: ID of the user
           format: uuid
-          type: string
         providerType:
+          type: string
           enum:
             - EMail
           title: Auth provider type
           description: The type of the auth provider
-          type: string
         accountId:
-          description: The account id associated with the provider
           type: string
+          description: The account id associated with the provider
       title: UserProvider
     CreateEMailUserRequest:
       type: object
@@ -63,22 +63,22 @@ components:
         - password
       properties:
         givenName:
+          type: string
           minLength: 1
           maxLength: 50
-          type: string
         familyName:
+          type: string
           minLength: 1
           maxLength: 100
-          type: string
         email:
+          type: string
           minLength: 3
           maxLength: 255
           format: email
-          type: string
         password:
+          type: string
           minLength: 8
           maxLength: 64
-          type: string
       title: CreateEMailUserRequest
     CreateEMailUserResponse:
       type: object
