@@ -1,18 +1,33 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
-  "organizeImports": {
-    "enabled": true
+  "$schema": "https://biomejs.dev/schemas/2.3.13/schema.json",
+  "files": {
+    "includes": [
+      "**",
+      "!node_modules/**",
+      "!**/*.config.*",
+      "!**/*.json",
+      "!.turbo/**",
+      "!**/dist/**",
+      "!.pnpm-store/**",
+      "!packages/backend-client/**"
+    ]
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
-    "lineWidth": 120,
-    "ignore": ["node_modules/*", "*.config.*", "*.json", "tsconfig.json", ".turbo", "dist/*", ".pnpm-store/*"]
+    "lineWidth": 120
   },
   "linter": {
     "enabled": true,
-    "ignore": ["dist/*", ".pnpm-store/*", "packages/backend-client/*"],
     "rules": {
+      "recommended": true,
       "performance": {
         "noDelete": "off"
       },
@@ -25,8 +40,7 @@
       "suspicious": {
         "noImplicitAnyLet": "off",
         "noExplicitAny": "off"
-      },
-      "recommended": true
+      }
     }
   }
 }
