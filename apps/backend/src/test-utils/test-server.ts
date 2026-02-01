@@ -1,15 +1,13 @@
-import { ajvPlugins } from "@/api-lib/ajv-plugins.js";
-import { errorHandler } from "@/api-lib/error-handler.js";
-import routes from "@/api/index.js";
-import { testPlugins } from "@/test-utils/plugins/index.js";
-import { getLogger } from "@/utils/logger.js";
 import { type TypeBoxTypeProvider, TypeBoxValidatorCompiler } from "@fastify/type-provider-typebox";
-import chalk from "chalk";
 import Fastify, { type InjectOptions, type LightMyRequestResponse } from "fastify";
 import fp from "fastify-plugin";
 import { nanoid } from "nanoid";
-import { expect } from "vitest";
-import { afterAll, beforeAll } from "vitest";
+import { afterAll, beforeAll, expect } from "vitest";
+import routes from "@/api/index.js";
+import { ajvPlugins } from "@/api-lib/ajv-plugins.js";
+import { errorHandler } from "@/api-lib/error-handler.js";
+import { testPlugins } from "@/test-utils/plugins/index.js";
+import { getLogger } from "@/utils/logger.js";
 
 declare module "fastify" {
   interface InjectOptions {
@@ -34,7 +32,7 @@ export function serverTestSetup(routes: any) {
     ajv: {
       plugins: ajvPlugins,
     },
-    // @ts-ignore
+    // @ts-expect-error
     loggerInstance: logger,
     genReqId: () => nanoid(12),
   })
@@ -54,7 +52,7 @@ type InjectFunction = typeof testFastify.inject;
 
 const originalInject: InjectFunction = testFastify.inject.bind(testFastify);
 
-// @ts-ignore
+// @ts-expect-error
 testFastify.inject = async (opts: InjectOptions): Promise<LightMyRequestResponse> => {
   const expectedStatusCode = opts.expectedStatusCode ?? 200;
 
@@ -69,19 +67,17 @@ testFastify.inject = async (opts: InjectOptions): Promise<LightMyRequestResponse
 
   // Log the response if it's not what we expected
   if (!opts.disableExpectedStatusCodeCheck && expectedStatusCode !== result.statusCode) {
-    const expectMessage = `
+    const logger = getLogger();
+    logger.enableLogging();
+    logger
+      .withMetadata({
+        request: opts,
+        response: responsePayload,
+      })
+      .error(`Failed request: ${opts.method} ${opts.url} - Expected ${expectedStatusCode}, got ${result.statusCode}`);
+    logger.disableLogging();
 
-${chalk.red(`Failed request: ${opts.method} ${opts.url}`)}
-${chalk.red(`Expected status code: ${expectedStatusCode}, got ${result.statusCode}`)}
-
-${chalk.red("==== response ====")}
-${chalk.red(JSON.stringify(responsePayload, null, 2))}
-
-${chalk.blue("==== request ====")}
-${chalk.blue(JSON.stringify(opts, null, 2))}
-`;
-
-    expect(result.statusCode, expectMessage).toBe(expectedStatusCode);
+    expect(result.statusCode).toBe(expectedStatusCode);
   }
 
   return result;
