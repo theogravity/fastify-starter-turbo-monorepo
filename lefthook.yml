@@ -1,26 +1,38 @@
 pre-commit:
   commands:
-    "lint and format files":
+    parallel: true
+    "update pnpm lockfiles":
+      glob: "**/package.json"
+      run: pnpm install
+      stage_fixed: true
+    "format package.json files":
+      glob: "**/package.json"
+      run: pnpm run syncpack:format
+      stage_fixed: true
+      tags:
+        - package-lint
+    "check package.json files":
+      glob: "**/package.json"
+      run: pnpm run syncpack:lint
+      stage_fixed: true
+      tags:
+        - package-lint
+    "lint staged":
       glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
-      run: pnpm run biome:check {staged_files} && pnpm run biome:format {staged_files} && pnpm run biome:lint {staged_files}
+      run: turbo run lint:staged
       stage_fixed: true
       tags:
         - lint
         - staged-lint
-      exclude:
-        - "packages/backend-client/src/*.ts"
-    "check and format package.json files":
-      glob: "**/package.json"
-      run: pnpm run syncpack:format  && pnpm run syncpack:lint
-      stage_fixed: true
-      tags:
-        - package-lint
-    "verify typescript types":
-      glob: "*.{ts,mjs,d.cts,d.mts,tsx}"
+
+pre-push:
+  parallel: true
+  commands:
+    "verify types":
       run: pnpm run verify-types
       tags:
-        - verify-types
-    "update lockfiles":
-      glob: "**/package.json"
-      run: pnpm install
-      stage_fixed: true
+        - types
+    "lint":
+      run: pnpm run lint
+      tags:
+        - lint

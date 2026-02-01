@@ -17,6 +17,7 @@
     "build:dev": "hash-runner",
     "clean": "rm -rf .turbo node_modules dist",
     "lint": "biome check --write --unsafe src && biome format src --write && biome lint src --fix",
+    "lint:staged": "biome check --no-errors-on-unmatched --write --unsafe --staged src",
     "verify-types": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
