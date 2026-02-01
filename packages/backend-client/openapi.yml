@@ -17,6 +17,10 @@ components:
       type: string
     User:
       type: object
+      required:
+        - id
+        - givenName
+        - familyName
       properties:
         id:
           description: ID of the user
@@ -28,13 +32,13 @@ components:
         familyName:
           description: Family name of the user
           type: string
-      required:
-        - id
-        - givenName
-        - familyName
       title: User
     UserProvider:
       type: object
+      required:
+        - userId
+        - providerType
+        - accountId
       properties:
         userId:
           description: ID of the user
@@ -49,13 +53,14 @@ components:
         accountId:
           description: The account id associated with the provider
           type: string
-      required:
-        - userId
-        - providerType
-        - accountId
       title: UserProvider
     CreateEMailUserRequest:
       type: object
+      required:
+        - givenName
+        - familyName
+        - email
+        - password
       properties:
         givenName:
           minLength: 1
@@ -74,22 +79,17 @@ components:
           minLength: 8
           maxLength: 64
           type: string
-      required:
-        - givenName
-        - familyName
-        - email
-        - password
       title: CreateEMailUserRequest
     CreateEMailUserResponse:
       type: object
+      required:
+        - user
+        - provider
       properties:
         user:
           $ref: "#/components/schemas/User"
         provider:
           $ref: "#/components/schemas/UserProvider"
-      required:
-        - user
-        - provider
       title: CreateEMailUserResponse
 paths:
   /users/email:
