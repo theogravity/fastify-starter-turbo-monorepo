@@ -19,4 +19,6 @@ process.on("uncaughtException", (error) => {
   process.exit(1);
 });
 
-await startServer({ port: SERVER_PORT });
+(async () => {
+  await startServer({ port: SERVER_PORT });
+})();

@@ -10,6 +10,7 @@
     "db:migrate:undo": "kysely migrate down",
     "generate": "bun run scripts/generate-client-yaml.ts",
     "build": "rm -rf dist && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
+    "compile": "bun build --compile --target=bun --bytecode --minify --sourcemap ./src/index.ts --outfile ./dist/backend",
     "clean": "rm -rf .turbo node_modules dist",
     "dev": "bun run --watch ./src/index.ts",
     "lint": "biome check --no-errors-on-unmatched --write --unsafe src",
