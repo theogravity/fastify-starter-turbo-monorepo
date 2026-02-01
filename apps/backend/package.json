@@ -54,7 +54,6 @@
     "@types/pg": "8.16.0",
     "jiti": "2.6.1",
     "kysely-ctl": "0.20.0",
-    "ts-node": "10.9.2",
     "tsc-alias": "1.8.16",
     "tsx": "4.21.0",
     "typescript": "5.9.3",

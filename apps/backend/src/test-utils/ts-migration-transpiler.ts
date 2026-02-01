@@ -3,7 +3,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createJiti } from "jiti";
 import type { Migration, MigrationProvider } from "kysely";
-import ts from "ts-node";
 
 const moduleFileUrl = import.meta.url;
 
@@ -11,10 +10,6 @@ const moduleFileUrl = import.meta.url;
 const jitiInstance = createJiti(fileURLToPath(moduleFileUrl), {
   interopDefault: true,
   alias: { "@": fileURLToPath(new URL("./src", moduleFileUrl)) },
-});
-
-ts.register({
-  transpileOnly: true,
 });
 
 export class TypeScriptFileMigrationProvider implements MigrationProvider {
