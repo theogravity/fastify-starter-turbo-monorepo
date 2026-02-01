@@ -1,4 +1,24 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "extends": ["//"]
+  "extends": ["//"],
+  "tasks": {
+    "clean": {},
+    "build": {
+      "dependsOn": ["@internal/backend#build"],
+      "inputs": ["*.json", "*.ts", "src/**", "openapi.yml"],
+      "outputs": ["dist/**"]
+    },
+    "build:dev": {
+      "dependsOn": ["@internal/backend#generate"],
+      "inputs": ["*.json", "*.ts", "src/**", "openapi.yml"],
+      "outputs": ["dist/**"]
+    },
+    "build:client": {
+      "inputs": ["*.json", "openapi.yml"],
+      "outputs": ["src/generated/**"]
+    },
+    "typecheck": {
+      "inputs": ["*.ts", "*.json", "src/**"]
+    }
+  }
 }

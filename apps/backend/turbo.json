@@ -1,4 +1,37 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "extends": ["//"]
+  "extends": ["//"],
+  "tasks": {
+    "clean": {},
+    "build": {
+      "dependsOn": ["^build", "lint"],
+      "inputs": ["*.json", "*.ts", "src/**", "scripts/**"],
+      "outputs": ["dist/**"]
+    },
+    "dev": {
+      "dependsOn": ["@internal/backend-errors#build:dev"],
+      "persistent": true,
+      "cache": false
+    },
+    "lint": {
+      "inputs": ["*.ts", "*.json", "src/**"]
+    },
+    "test": {
+      "dependsOn": ["@internal/backend-errors#build:dev"],
+      "persistent": true,
+      "cache": false
+    },
+    "verify-types": {
+      "inputs": ["*.ts", "*.json", "src/**"]
+    },
+    "prod": {
+      "dependsOn": ["build"],
+      "persistent": true,
+      "cache": false
+    },
+    "generate": {
+      "inputs": ["src/**", "scripts/**"],
+      "outputs": ["../../packages/backend-client/openapi.yml"]
+    }
+  }
 }
