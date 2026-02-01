@@ -1,10 +1,8 @@
-import { BACKEND_LOG_LEVEL, IS_PROD, IS_TEST } from "@/constants.js";
-import { asyncLocalStorage } from "@/utils/async-local-storage.js";
-import { PinoTransport } from "@loglayer/transport-pino";
-import { getPrettyTerminal } from "@loglayer/transport-pretty-terminal";
-import { type ILogLayer, LogLayer, type LogLayerTransport, type PluginShouldSendToLoggerParams } from "loglayer";
-import { pino } from "pino";
+import { getSimplePrettyTerminal } from "@loglayer/transport-simple-pretty-terminal";
+import { type ILogLayer, LogLayer, type PluginShouldSendToLoggerParams } from "loglayer";
 import { serializeError } from "serialize-error";
+import { IS_TEST } from "@/constants.js";
+import { asyncLocalStorage } from "@/utils/async-local-storage.js";
 
 declare module "fastify" {
   interface FastifyBaseLogger extends LogLayer {}
@@ -12,34 +10,10 @@ declare module "fastify" {
 
 const ignoreLogs = ["request completed", "incoming request"];
 
-const transports: LogLayerTransport[] = [];
-
-if (IS_PROD) {
-  transports.push(
-    new PinoTransport({
-      logger: pino({
-        level: BACKEND_LOG_LEVEL,
-      }),
-    }),
-  );
-} else if (IS_TEST) {
-  transports.push(
-    getPrettyTerminal({
-      // Disabled since tests themselves are interactive
-      disableInteractiveMode: true,
-    }),
-  );
-} else {
-  transports.push(
-    getPrettyTerminal({
-      // Disabled since we tend to run multiple services via turbo watch
-      disableInteractiveMode: true,
-    }),
-  );
-}
+const transport = getSimplePrettyTerminal({ runtime: "node" });
 
 const logger = new LogLayer({
-  transport: transports,
+  transport,
   contextFieldName: "context",
   metadataFieldName: "metadata",
   errorFieldName: "err",
