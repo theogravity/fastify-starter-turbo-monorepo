@@ -13,10 +13,10 @@
   },
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "pnpm run generate:yaml-file && pnpm run build:client",
+    "build": "bun run generate:yaml-file && bun run build:client",
     "build:client": "openapi-ts && tsdown",
-    "build:dev": "pnpm run generate:yaml-file && hash-runner",
-    "generate:yaml-file": "cd ../../apps/backend && pnpm run generate",
+    "build:dev": "bun run generate:yaml-file && hash-runner",
+    "generate:yaml-file": "cd ../../apps/backend && bun run generate",
     "clean": "rm -rf .turbo node_modules dist",
     "verify-types": "tsc --noEmit"
   },

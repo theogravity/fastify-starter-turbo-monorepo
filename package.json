@@ -3,23 +3,24 @@
   "description": "",
   "version": "1.0.0",
   "private": true,
+  "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "start": "turbo watch dev",
     "add-changeset": "changeset add",
     "build": "turbo run build",
     "changeset": "changeset",
-    "db:migrate:create": "cd apps/backend && pnpm run db:migrate:create",
-    "db:migrate:latest": "cd apps/backend && pnpm run db:migrate:latest",
-    "db:migrate:undo": "cd apps/backend && pnpm run db:migrate:undo",
+    "db:migrate:create": "cd apps/backend && bun run db:migrate:create",
+    "db:migrate:latest": "cd apps/backend && bun run db:migrate:latest",
+    "db:migrate:undo": "cd apps/backend && bun run db:migrate:undo",
     "clean:repo": "git add --all && git reset --hard",
-    "clean": "pnpm run clean:node_modules && pnpm run clean:turbo && pnpm run clean:dist && pnpm run clean:hash-runner",
+    "clean": "bun run clean:node_modules && bun run clean:turbo && bun run clean:dist && bun run clean:hash-runner",
     "clean:workspaces": "turbo clean",
     "clean:node_modules": "find . -name \"node_modules\" -type d -prune -exec rm -rf '{}' +\n",
     "clean:turbo": "find . -name \".turbo\" -type d -prune -exec rm -rf '{}' +\n",
     "clean:dist": "find . -name \"dist\" -type d -prune -exec rm -rf '{}' +\n",
     "clean:hash-runner": "find . -name \".hashes.json\" -type f -delete\n",
     "publish-packages": "turbo run build && changeset version && changeset publish",
-    "syncpack:update": "syncpack update && syncpack fix-mismatches && pnpm i",
+    "syncpack:update": "syncpack update && syncpack fix-mismatches && bun install",
     "syncpack:format": "syncpack format",
     "syncpack:lint": "syncpack lint",
     "release": "changeset publish",
@@ -43,5 +44,5 @@
   "engines": {
     "bun": ">=1.0.0"
   },
-  "packageManager": "pnpm@10.28.2"
+  "packageManager": "bun@1.3.8"
 }
